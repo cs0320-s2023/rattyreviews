@@ -22,7 +22,6 @@ public class Server {
         });
 
 
-    Spark.get("rlData", new RLDataHandler());
     Spark.init();
     Spark.awaitInitialization();
     System.out.println("Server started.");
