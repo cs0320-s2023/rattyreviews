@@ -1,11 +1,8 @@
 package edu.brown.cs.student.main.server;
 
+import static edu.brown.cs.student.main.webscraping.testImp.doesItWork;
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.APIHandlers.RLData.RLDataHandler;
-import edu.brown.cs.student.main.APIHandlers.annotations.AnnotationHandler;
-import edu.brown.cs.student.main.APIHandlers.annotations.ClearAnnotationsHandler;
-import edu.brown.cs.student.main.APIHandlers.annotations.GetAnnotationsHandler;
 import spark.Spark;
 
 public class Server {
@@ -24,6 +21,7 @@ public class Server {
 
     Spark.init();
     Spark.awaitInitialization();
+    doesItWork();
     System.out.println("Server started.");
   }
 }

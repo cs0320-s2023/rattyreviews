@@ -85,6 +85,17 @@
       <scope>test</scope>
     </dependency>
 
+
+    <!--
+               HtmlUnit is a browser interaction framework for Java.
+        -->
+
+    <dependency>
+      <groupId>net.sourceforge.htmlunit</groupId>
+      <artifactId>htmlunit</artifactId>
+      <version>2.60.0</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>
