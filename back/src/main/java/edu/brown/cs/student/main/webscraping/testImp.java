@@ -41,25 +41,49 @@ public class testImp {
         webClient.getOptions().setPrintContentOnFailingStatusCode(false);
 
         try {
-            //fails due to ssl errors :( need better certs
+            /*This might fail due to SSL errors, since the standard installation of Java does not include the InCommon certificate
+            * that dining.brown.edu uses. This is normal! You need to install the InCommon cert for your version of Java. This
+            * StackOverflow post gives a good guide on how to achieve this: */
+            //https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore
             HtmlPage page = webClient.getPage("http://dining.brown.edu/cafe/sharpe-refectory/2023-04-21/");
-            System.out.println();
             webClient.getCurrentWindow().getJobManager().removeAllJobs();
             webClient.close();
 
-            System.out.println(page);
+            //System.out.println(page);
 
             String title = page.getTitleText();
             System.out.println("Page Title: " + title);
 
-            List<?> anchors = page.getByXPath("//a[@class='block group']");
+            //System.out.println(page.asXml());
+
+            List<HtmlElement> allDayParts = page.getByXPath("//div[@class='c-tab__content-inner site-panel__daypart-tab-content-inner']");
+            System.out.println(allDayParts.size());
+            List<DomElement> someShit = allDayParts.get(0).getByXPath("child::*");
+            System.out.println(someShit.size());
+
+
+            List<DomElement> breakfastMenu = allDayParts.get(0).getByXPath("child::*");
+            List<DomElement> lunchMenu = allDayParts.get(1).getByXPath("child::*");
+            List<DomElement> dinnerMenu = allDayParts.get(2).getByXPath("child::*");
+
+            //prints menu
+            for (DomElement item : breakfastMenu) {
+                System.out.println(item.getTextContent());
+            }
+
+            System.out.println();
+
+            List<HtmlButton> anchors = page.getByXPath("//button[@class='h4 site-panel__daypart-item-title']");
             System.out.println(anchors.size());
             for (int i = 0; i < anchors.size(); i++) {
-                System.out.println("fart");
-                HtmlAnchor link = (HtmlAnchor) anchors.get(i);
-                String recipeTitle = link.getAttribute("title").replace(',', ';');
-                System.out.println(recipeTitle);
-                String recipeLink = link.getHrefAttribute();
+                //System.out.println("fart");
+                HtmlButton item = anchors.get(i);
+                //System.out.println(item.getTextContent());
+
+//                HtmlAnchor link = (HtmlAnchor) anchors.get(i);
+//                String recipeTitle = link.getAttribute("title").replace(',', ';');
+//                System.out.println(recipeTitle);
+//                String recipeLink = link.getHrefAttribute();
             }
 
         } catch (IOException e) {
