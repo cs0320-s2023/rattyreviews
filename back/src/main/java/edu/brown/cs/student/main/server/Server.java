@@ -18,7 +18,6 @@ public class Server {
           response.header("Access-Control-Allow-Methods", "GET");
         });
 
-
     Spark.init();
     Spark.awaitInitialization();
     doesItWork();

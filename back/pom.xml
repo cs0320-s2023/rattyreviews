@@ -76,17 +76,6 @@
     </dependency>
 
     <!--
-               JUnit is a unit testing library for Java.
-        -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.4.0</version>
-      <scope>test</scope>
-    </dependency>
-
-
-    <!--
                HtmlUnit is a browser interaction framework for Java.
         -->
 
@@ -94,6 +83,16 @@
       <groupId>net.sourceforge.htmlunit</groupId>
       <artifactId>htmlunit</artifactId>
       <version>2.60.0</version>
+    </dependency>
+
+    <!--
+               JUnit is a unit testing library for Java.
+        -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.4.0</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
