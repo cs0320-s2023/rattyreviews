@@ -9,7 +9,7 @@ public class reviewController {
 
     private Dictionary<Integer, Review> reviewDictionary;
     private int ID;
-    private List<Food> foodItems; 
+    private List<Food> foodItems;
 
 
     public reviewController(){
