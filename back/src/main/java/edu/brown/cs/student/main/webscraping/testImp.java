@@ -2,11 +2,15 @@ package edu.brown.cs.student.main.webscraping;
 
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
+import com.google.common.collect.ImmutableList;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class testImp {
 
@@ -58,18 +62,41 @@ public class testImp {
 
             List<HtmlElement> allDayParts = page.getByXPath("//div[@class='c-tab__content-inner site-panel__daypart-tab-content-inner']");
             System.out.println(allDayParts.size());
-            List<DomElement> someShit = allDayParts.get(0).getByXPath("child::*");
+            List<HtmlElement> someShit = allDayParts.get(0).getByXPath("child::*");
             System.out.println(someShit.size());
 
 
-            List<DomElement> breakfastMenu = allDayParts.get(0).getByXPath("child::*");
+            List<HtmlElement> breakfastMenu = allDayParts.get(0).getByXPath("*");
             List<DomElement> lunchMenu = allDayParts.get(1).getByXPath("child::*");
             List<DomElement> dinnerMenu = allDayParts.get(2).getByXPath("child::*");
 
-            //prints menu
-            for (DomElement item : breakfastMenu) {
-                System.out.println(item.getTextContent());
+            //might want to make this immutable to make this more defensive lmao
+            Map<String, List<String>> rattyBreakfast = new HashMap<>();
+            String lastStation = "";
+
+            //TODO: get descriptions with food
+            //TODO: Incorporate into standard record frameworks
+            //collects breakfast menu
+            //TODO: expand to all menus
+            for (HtmlElement item : breakfastMenu) {
+                if(item.getFirstChild().getNodeName().equals("h3")) {
+                    List<HtmlButton> sectionHeaderItems = item.getByXPath(".//button[@class='h4 site-panel__daypart-item-title']");
+                    List<String> firstFoodItems = new ArrayList<>();
+                    for (HtmlButton button: sectionHeaderItems) {
+                        firstFoodItems.add(button.getVisibleText());
+                    }
+                    lastStation = item.getFirstChild().getVisibleText();
+                    rattyBreakfast.put(lastStation, firstFoodItems);
+                } else {
+                    //defensive copy
+                    List<String> updateList = new ArrayList<>(rattyBreakfast.get(lastStation));
+                    updateList.add(item.getVisibleText());
+
+                    rattyBreakfast.put(lastStation, updateList);
+                }
             }
+
+            System.out.println(rattyBreakfast);
 
             System.out.println();
 
