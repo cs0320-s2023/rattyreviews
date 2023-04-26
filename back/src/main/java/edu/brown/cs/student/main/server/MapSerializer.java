@@ -6,7 +6,10 @@ import com.squareup.moshi.Types;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import edu.brown.cs.student.main.Utils.Food;
 import okio.BufferedSource;
 
 public class MapSerializer {
@@ -80,6 +83,18 @@ public class MapSerializer {
     }
   }
 
+  public static <T> String toJsonGeneric(Map<String, T> target, Class<T> generic) {
+    try {
+      Moshi moshi = new Moshi.Builder().build();
+      JsonAdapter<Map> adapter =
+              moshi.adapter(Types.newParameterizedType(Map.class, String.class, generic));
+      String someStr = adapter.toJson(target);
+      return someStr;
+    } catch (Exception e) {
+      throw e;
+    }
+  }
+
   /**
    * Uses Moshi to convert a BufferedSource to a Map of strings and objects
    *
@@ -120,4 +135,5 @@ public class MapSerializer {
       throw e;
     }
   }
+
 }

@@ -1,9 +1,27 @@
 package edu.brown.cs.student.main.Utils;
 
+import com.squareup.moshi.Json;
+
+import java.util.List;
+import java.util.Map;
+
 public class Food {
+
+  //using records to keep things flexible / keep me from pulling hair out
+  public record Menu(
+          Map<String, List<FoodItem>> menu
+  ) {}
+
+  public record FoodItem(
+          String food, String description, double rating, Map<String, Boolean> foodRestrictions
+  ) {}
+
+
 
   private String food, description;
   private boolean isVegan, isVegetarian, isHalal, isKosher, isLactoseFree;
+
+  //TODO: Make rating optional
   private double rating;
 
   public Food(String food, String description, double rating) {
@@ -37,7 +55,13 @@ public class Food {
     this.rating = rating;
   }
 
+  public Food(String food, String description) {
+    this.food = food;
+    this.description = description;
+    this.rating = -1;
+  }
+
   public String toString() {
-    return "Food: " + food + "\n Description: " + description;
+    return "Food: " + food + "\t Description: " + description;
   }
 }

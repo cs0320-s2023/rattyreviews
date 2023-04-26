@@ -1,8 +1,9 @@
 package edu.brown.cs.student.main.server;
 
-import static edu.brown.cs.student.main.webscraping.testImp.doesItWork;
+import static edu.brown.cs.student.main.webscraping.ScrapeDiningMenu.getAllMenus;
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
 import spark.Spark;
 
 public class Server {
@@ -20,7 +21,8 @@ public class Server {
 
     Spark.init();
     Spark.awaitInitialization();
-    doesItWork();
+    getAllMenus();
+    Spark.get("menus", new ProvideMenu());
     System.out.println("Server started.");
   }
 }
