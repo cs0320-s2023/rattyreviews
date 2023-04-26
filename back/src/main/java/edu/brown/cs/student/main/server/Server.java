@@ -21,7 +21,9 @@ public class Server {
 
     Spark.init();
     Spark.awaitInitialization();
-    getAllMenus();
+    //would love to add caching to this, so we don't need to call on dining.brown.edu every time someone loads our page LMAO
+      //like it takes a full 6 seconds on a good connection to rerun the scraping. not bad if it's in the background but
+      //VERY bad if it does that on every load
     Spark.get("menus", new ProvideMenu());
     System.out.println("Server started.");
   }

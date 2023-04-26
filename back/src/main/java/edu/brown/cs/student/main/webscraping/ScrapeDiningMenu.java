@@ -5,10 +5,10 @@ import com.gargoylesoftware.htmlunit.html.*;
 import edu.brown.cs.student.main.Utils.Food;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.*;
 
 //TODO: use data from https://mymeal.brown.edu/NetNutrition/ to determine allergens
 //TODO: have this be triggered once a day @ midnight for caching into a db
@@ -29,8 +29,20 @@ public class ScrapeDiningMenu {
        * that dining.brown.edu uses. This is normal! You need to install the InCommon cert for your version of Java. This
        * StackOverflow post gives a good guide on how to achieve this, ask Connor if you need help: */
       // https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore
+
+
+//      System.out.println(Year.now());
+//
+//      Calendar rightNow = Calendar.getInstance();
+//      System.out.println(rightNow.get(Calendar.YEAR));
+//      System.out.println(rightNow.get(Calendar.MONTH));
+//      System.out.println(rightNow.get(Calendar.DAY_OF_MONTH));
+//      System.out.println(rightNow);
+
+      //TODO: have date be a passed in param,
+          //currently relying on LocalDate.now() since all team members are in EST + its very likely dining.brown.edu uses that as well
       HtmlPage page =
-          webClient.getPage("http://dining.brown.edu/cafe/sharpe-refectory/2023-04-21/");
+          webClient.getPage("http://dining.brown.edu/cafe/sharpe-refectory/" + LocalDate.now());
       webClient.getCurrentWindow().getJobManager().removeAllJobs();
       webClient.close();
 
