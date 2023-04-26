@@ -15,7 +15,7 @@ import java.util.*;
 
 public class ScrapeDiningMenu {
 
-  public static Map<String, Food.Menu> getAllMenus() {
+  public static Map<String, Food.Menu> getAllMenus(LocalDate date) {
     WebClient webClient = new WebClient(BrowserVersion.CHROME);
     // v Quiets all the exceptions that we don't care about, especially related to ads.
     webClient.getOptions().setCssEnabled(false);
@@ -30,19 +30,8 @@ public class ScrapeDiningMenu {
        * StackOverflow post gives a good guide on how to achieve this, ask Connor if you need help: */
       // https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore
 
-
-//      System.out.println(Year.now());
-//
-//      Calendar rightNow = Calendar.getInstance();
-//      System.out.println(rightNow.get(Calendar.YEAR));
-//      System.out.println(rightNow.get(Calendar.MONTH));
-//      System.out.println(rightNow.get(Calendar.DAY_OF_MONTH));
-//      System.out.println(rightNow);
-
-      //TODO: have date be a passed in param,
-          //currently relying on LocalDate.now() since all team members are in EST + its very likely dining.brown.edu uses that as well
       HtmlPage page =
-          webClient.getPage("http://dining.brown.edu/cafe/sharpe-refectory/" + LocalDate.now());
+          webClient.getPage("http://dining.brown.edu/cafe/sharpe-refectory/" + date.toString());
       webClient.getCurrentWindow().getJobManager().removeAllJobs();
       webClient.close();
 
@@ -54,11 +43,13 @@ public class ScrapeDiningMenu {
               "//div[@class='c-tab__content-inner site-panel__daypart-tab-content-inner']");
       System.out.println(allDayParts.size());
 
+      //TODO: add check if these parts aren't avail/OOB. might be true for getting a date that is unfilled
+      //this is a check on allDayParts.size() != 3 btw
       List<HtmlElement> breakfastMenu = allDayParts.get(0).getByXPath("*");
       List<HtmlElement> lunchMenu = allDayParts.get(1).getByXPath("*");
       List<HtmlElement> dinnerMenu = allDayParts.get(2).getByXPath("*");
 
-      // might want to make this immutable to make this more defensive lmao
+      // might want to make this immutable to make this more defensive lmao???
       Food.Menu rattyBreakfastFoods = buildMenu(breakfastMenu);
       Food.Menu rattyLunchFoods = buildMenu(lunchMenu);
       Food.Menu rattyDinnerFoods = buildMenu(dinnerMenu);
