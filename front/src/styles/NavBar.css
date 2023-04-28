@@ -30,11 +30,15 @@
 }
 
 .button-text {
-  color: #e5ffd0;
   font-size: 32px;
   margin: 0.3vh;
 }
 
 .about-button {
   margin-left: 2%;
+}
+
+.react-link {
+  text-decoration: none;
+  color: #e5ffd0;
 }
