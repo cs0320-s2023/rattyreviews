@@ -6,8 +6,11 @@ import "./App.css";
 // import {API_KEY} from "./private/api_key"
 
 function App() {
-  return <div className="App">
-  </div>
+  return (
+    <div className="App">
+      <div></div>
+    </div>
+  );
 }
 
 export default App;
