@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "../styles/NavBar.css";
+import { TitleElement } from "./TitleElement";
 
 function NavBar() {
   return (
-    <div className="navbar">
-      <div className="title-container">
-        <p className="title">The Ratty Reviews 🐀</p>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TitleElement />}>
+          
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -18,3 +18,23 @@
   margin: 0px;
   font-size: 50px;
 }
+
+.nav-button {
+  height: 5.5vh;
+  width: 25vh;
+  background-color: #6f3b2f;
+  border-radius: 15px;
+}
+.review-button {
+  margin-left: 36vh;
+}
+
+.button-text {
+  color: #e5ffd0;
+  font-size: 32px;
+  margin: 0.3vh;
+}
+
+.about-button {
+  margin-left: 2%;
+}
