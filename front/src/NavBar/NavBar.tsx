@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <div className="navbar">
       <div className="title-container">
-        <p className="title">The Ratty Reviews</p>
+        <p className="title">The Ratty Reviews 🐀</p>
       </div>
     </div>
   );

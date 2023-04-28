@@ -1,7 +1,7 @@
 .navbar {
   width: 150vh;
   background-color: #7fa465;
-  height: 5vh;
+  height: 8vh;
   border-radius: 20px;
   display: flex;
   justify-content: flex-start;
@@ -16,5 +16,5 @@
 
 .title {
   margin: 0px;
-  font-size: 1.8em;
+  font-size: 50px;
 }
