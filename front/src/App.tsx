@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
-
-// REMEMBER TO PUT YOUR API KEY IN A FOLDER THAT IS GITIGNORED!!
-// (for instance, /src/private/api_key.tsx)
-// import {API_KEY} from "./private/api_key"
+import "./styles/App.css";
+import { NavBar } from "./NavBar/NavBar";
 
 function App() {
   return (
     <div className="App">
+      <div className="navbar-container">
+        <NavBar />
+      </div>
       <div></div>
     </div>
   );
