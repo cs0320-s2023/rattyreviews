@@ -13,7 +13,7 @@ public class Food {
   ) {}
 
   public record FoodItem(
-          String food, String description, double rating, Map<String, Boolean> foodRestrictions
+          String food, String description, double rating, List<String> foodRestrictions
   ) {}
 
 
