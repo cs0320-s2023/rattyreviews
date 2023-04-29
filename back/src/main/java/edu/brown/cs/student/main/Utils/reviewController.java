@@ -7,6 +7,9 @@ import java.util.List;
 
 public class reviewController {
 
+  //would love to convert this to some external db at some point, not necessary tho
+  //need something like this for food items so we can cross ref when returning menus
+
   private Dictionary<Integer, Review> reviewDictionary;
   private int REVIEW_ID;
 

@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 import edu.brown.cs.student.main.Utils.Food;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -12,6 +13,19 @@ import java.util.*;
 
 //TODO: use data from https://mymeal.brown.edu/NetNutrition/ to determine allergens
 //TODO: have this be triggered once a day @ midnight for caching into a db
+
+
+
+//Work:
+  //pull in restrictions on web scrape DONE
+  //save menus to file for ez caching
+  //cry
+  //get posting working from fe
+  //create review db
+  //set up 24 aggregate and scrapers
+  //piss
+
+
 
 public class ScrapeDiningMenu {
 
@@ -48,7 +62,6 @@ public class ScrapeDiningMenu {
       List<HtmlElement> breakfastMenu = allDayParts.get(0).getByXPath("*");
       List<HtmlElement> lunchMenu = allDayParts.get(1).getByXPath("*");
       List<HtmlElement> dinnerMenu = allDayParts.get(2).getByXPath("*");
-
       // might want to make this immutable to make this more defensive lmao???
       Food.Menu rattyBreakfastFoods = buildMenu(breakfastMenu);
       Food.Menu rattyLunchFoods = buildMenu(lunchMenu);
@@ -86,7 +99,6 @@ public class ScrapeDiningMenu {
         }
         lastStation = item.getFirstChild().getVisibleText();
         accMenu.put(lastStation, firstFoodItems);
-
       } else {
         // defensive copy
         List<Food.FoodItem> updateList = new ArrayList<Food.FoodItem>(accMenu.get(lastStation));
@@ -108,14 +120,33 @@ public class ScrapeDiningMenu {
     if(htmlDesc != null) {
       foodDesc = htmlDesc.getVisibleText();
     }
-
-    //TODO: add dietary restrictions
+    HtmlElement dietaryElement = item.getFirstByXPath(".//span[@class='site-panel__daypart-item-cor-icons']");
+    Iterable<DomElement> dietaryIcons = new ArrayList<DomElement>();
+    if(dietaryElement != null) {
+      dietaryIcons = dietaryElement.getChildElements();
+    }
+    List<String> dietaryRestrictions = new ArrayList<>();
+    for (DomElement icon: dietaryIcons) {
+      Optional<String> iconRes = dietaryDisambiguator(icon.getAttribute("title"));
+      iconRes.ifPresent(str -> dietaryRestrictions.add(str));
+    }
 
     //TODO: pull rating so it's not sentinal val.
-    return new Food.FoodItem(foodTitle, foodDesc, -1, new HashMap<>());
+    return new Food.FoodItem(foodTitle, foodDesc, -1, dietaryRestrictions);
+  }
+
+  private static Optional<String> dietaryDisambiguator(String elementTitle) {
+    //noting here, in the code, that vegan/vegetarian != in accordance with dietary laws regarding meat / alcohol
+    List<String> keys = new ArrayList<>(List.of("vegan", "vegetarian", "without gluten", "halal", "farm to fork"));
+    List<String> resList = keys.stream().filter(str -> elementTitle.toLowerCase().contains(str)).toList();
+    if (resList.size() > 0) {
+      return Optional.of(resList.get(0));
+    }
+    return Optional.empty();
   }
 
 }
+
 
 
 
