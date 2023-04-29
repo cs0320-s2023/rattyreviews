@@ -8,22 +8,28 @@ import java.util.List;
 public class reviewController {
 
   private Dictionary<Integer, Review> reviewDictionary;
-  private int ID;
-  private List<Food> foodItems;
+  private int REVIEW_ID;
 
   public reviewController() {
     this.reviewDictionary = new Hashtable<>();
-    this.foodItems = new ArrayList<>();
-    this.ID = 0;
+    this.REVIEW_ID = 0;
   }
 
   public int getNumReviews() {
     return this.reviewDictionary.size();
   }
 
+  public Dictionary<Integer, Review> getReviewDictionary(){
+    return this.reviewDictionary;
+  }
+
+  public int getREVIEW_ID(){
+    return this.REVIEW_ID;
+  }
+
   public void insertReview(Review review) {
-    this.reviewDictionary.put(this.ID, review);
-    this.ID++;
+    this.reviewDictionary.put(this.REVIEW_ID, review);
+    this.REVIEW_ID++;
   }
 
   public void deleteReview(int Review_ID) {
@@ -34,11 +40,4 @@ public class reviewController {
     return "there are " + getNumReviews() + " reviews in the database";
   }
 
-  public void addFoodItem(Food food) {
-    foodItems.add(food);
-  }
-
-  public int getFoodListSize() {
-    return foodItems.size();
-  }
 }

@@ -4,6 +4,8 @@ import static edu.brown.cs.student.main.webscraping.ScrapeDiningMenu.getAllMenus
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
+import edu.brown.cs.student.main.APIHandlers.ReviewHistory;
+import edu.brown.cs.student.main.Utils.reviewController;
 import spark.Spark;
 
 public class Server {
@@ -24,7 +26,12 @@ public class Server {
     //would love to add caching to this, so we don't need to call on dining.brown.edu every time someone loads our page LMAO
       //like it takes a full 6 seconds on a good connection to rerun the scraping. not bad if it's in the background but
       //VERY bad if it does that on every load
+
+
+  // Once the frontend is further along we can decide how we want to populate the review dictionary
+    reviewController reviewController = new reviewController();
     Spark.get("menus", new ProvideMenu());
+    Spark.get("reviewHistory", new ReviewHistory(reviewController));
     System.out.println("Server started.");
   }
 }

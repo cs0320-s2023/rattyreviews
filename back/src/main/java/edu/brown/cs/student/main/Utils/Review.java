@@ -11,6 +11,8 @@ public class Review {
     this.star_Rating = star_Rating;
   }
 
+  public record foodReview(String name_of_reviewer, Food food, String comment, double star_Rating){}
+
   public String getName_of_reviewer() {
     return this.name_of_reviewer;
   }
