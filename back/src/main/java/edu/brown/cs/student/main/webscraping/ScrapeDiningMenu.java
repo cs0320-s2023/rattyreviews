@@ -17,7 +17,7 @@ import java.util.*;
 
 
 //Work:
-  //pull in restrictions on web scrape
+  //pull in restrictions on web scrape DONE
   //save menus to file for ez caching
   //cry
   //get posting working from fe
