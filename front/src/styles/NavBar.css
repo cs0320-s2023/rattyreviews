@@ -1,0 +1,44 @@
+.navbar {
+  width: 150vh;
+  background-color: #7fa465;
+  height: 8vh;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.title-container {
+  color: #e5ffd0;
+  margin-left: 1.5%;
+}
+
+.title {
+  margin: 0px;
+  font-size: 50px;
+}
+
+.nav-button {
+  height: 5.5vh;
+  width: 25vh;
+  background-color: #6f3b2f;
+  border-radius: 15px;
+}
+.review-button {
+  margin-left: 36vh;
+}
+
+.button-text {
+  font-size: 32px;
+  margin: 0.3vh;
+}
+
+.about-button {
+  margin-left: 2%;
+}
+
+.react-link {
+  text-decoration: none;
+  color: #e5ffd0;
+}
