@@ -16,8 +16,6 @@ public class Food {
           String food, String description, double rating, List<String> foodRestrictions
   ) {}
 
-
-
   private String food, description;
   private boolean isVegan, isVegetarian, isHalal, isKosher, isLactoseFree;
 

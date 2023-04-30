@@ -1,8 +1,10 @@
 package edu.brown.cs.student.main.APIHandlers;
 
+import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.Utils.reviewController;
+import net.sourceforge.htmlunit.corejs.javascript.JavaToJSONConverters;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -14,7 +16,7 @@ public class ReviewHistory implements Route {
 
     private reviewController controller;
     private Map<String, Object> response;
-
+    private final String exampleRevPATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\reviewData\\SampleReviews.json";
     public ReviewHistory(reviewController controller){
         this.controller = controller;
     }
@@ -29,15 +31,16 @@ public class ReviewHistory implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        //Just making sure that the program can properly serialize Review Objects from the backend, will change once the frontend is fully functioning
+
+
         if(this.controller.getReviewDictionary() == null){
             String defensiveCopy = new ViewFailureResponse().serialize(this.response);
             return defensiveCopy;
         }
-
         String defensiveCopy = new ViewSuccessResponse().serialize(this.response);
         return defensiveCopy;
     }
-
 
     /**
      * This is the ViewSuccessResponse class that handles the success case of viewing where
@@ -66,7 +69,6 @@ public class ReviewHistory implements Route {
 
     public record ViewFailureResponse(String error_type){
         public ViewFailureResponse(){this("Server ran into an error");}
-
         /**
          *
          * @param map the parameter map
