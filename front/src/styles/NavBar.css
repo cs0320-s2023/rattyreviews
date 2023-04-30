@@ -10,7 +10,6 @@
 }
 
 .title-container {
-  color: #e5ffd0;
   margin-left: 1.5%;
 }
 
@@ -22,9 +21,10 @@
 .nav-button {
   height: 5.5vh;
   width: 13vw;
-  background-color: #6f3b2f;
+  background-color: var(--nav-color, #6f3b2f);
   border-radius: 15px;
 }
+
 .review-button {
   margin-left: 30vw;
 }
