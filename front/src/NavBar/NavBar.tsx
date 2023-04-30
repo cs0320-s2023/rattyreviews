@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import "../styles/NavBar.css";
-import { TitleElement } from "./TitleElement";
 
 function NavBar() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<TitleElement />}>
-          <Route index element={<p>Home</p>}></Route>
-          <Route path="review-meal" element={<p>Review Meal</p>}></Route>
-          <Route path="about-us" element={<p>About Us</p>}></Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="navbar-container">
+      <div className="navbar">
+        <div className="title-container">
+          <p className="title">
+            <Link to="/" className="react-link title">
+              The Ratty Reviews 🐀
+            </Link>
+          </p>
+        </div>
+        <div className="nav-button review-button">
+          <p className="button-text">
+            <Link to="/review-meal" className="react-link">
+              Review Meal
+            </Link>
+          </p>
+        </div>
+        <div className="nav-button about-button">
+          <p className="button-text">
+            <Link to="/about-us" className="react-link">
+              About Us
+            </Link>
+          </p>
+        </div>
+        <Outlet />
+      </div>
+    </div>
   );
 }
 
