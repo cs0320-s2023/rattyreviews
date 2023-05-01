@@ -5,6 +5,7 @@ public class Review {
   private String comment;
   private double star_Rating;
 
+  //TODO: refactor to disambig names
   public Review(String name_of_reviewer, String comment, double star_Rating) {
     this.name_of_reviewer = name_of_reviewer;
     this.comment = comment;

@@ -21,6 +21,9 @@ public class ReviewHistory implements Route {
         this.controller = controller;
     }
 
+    //TODO: set up to accept reviews
+    //TODO: set up to filter out anything not being served for a target day
+
     /**
      * Provides the history of all the past reviews given to menus at the Ratty and it automatically updates each time
      * someone adds a review
