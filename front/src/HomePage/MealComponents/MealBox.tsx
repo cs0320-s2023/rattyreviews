@@ -1,4 +1,6 @@
-import "./../styles/MealBox.css";
+import "./../../styles/MealBox.css";
+import Meal from "./Meal";
+import MealDropDown from "./MealDropDown";
 
 interface MealBoxProps {
   dateString: String;
@@ -15,6 +17,17 @@ function MealBox(props: MealBoxProps) {
           </div>
           <div className="info-icon">
             <p>ℹ️</p>
+          </div>
+        </div>
+        <div className="dropdown-container">
+          <div className="breakfast-container">
+            <MealDropDown meal={Meal.Breakfast} />
+          </div>
+          <div className="lunch-container">
+            <MealDropDown meal={Meal.Lunch} />
+          </div>
+          <div className="dinner-container">
+            <MealDropDown meal={Meal.Dinner} />
           </div>
         </div>
       </div>

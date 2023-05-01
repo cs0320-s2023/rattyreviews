@@ -1,6 +1,6 @@
 import { NavBar } from "./../NavBar/NavBar";
-import DateParser from "./DateParser";
-import MealBox from "./MealBox";
+import DateParser from "./Parsers/DateParser";
+import MealBox from "./MealComponents/MealBox";
 
 function HomePage() {
   return (
