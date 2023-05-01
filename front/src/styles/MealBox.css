@@ -1,9 +1,13 @@
+:root {
+  --meal-text-color: #e5ffd0;
+}
 #meal-box {
   width: 47vw;
-  height: 70vh;
+  height: 75vh;
   background-color: #6f3b2f;
   border-radius: 20px;
   margin-top: 5vh;
+  overflow-y: auto;
 }
 
 .meal-box-container {
@@ -12,12 +16,40 @@
 }
 
 .date-text {
-  color: #e5ffd0;
-  font-size: 4.5em;
+  color: var(--meal-text-color);
+  font-size: 4em;
+  margin-top: 3vh;
+  margin-bottom: 1vh;
 }
 .title-line-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.meal-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 15vh;
+  background-color: #7fa465;
+  width: 30vw;
+  border-radius: 15px;
+}
+
+.meal-text {
+  color: var(--meal-text-color);
+  font-size: 2.5em;
+}
+
+.meals-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 4.2vh;
+  overflow-y: auto;
+}
+
+.meal-score {
+  margin-left: 6vw;
 }

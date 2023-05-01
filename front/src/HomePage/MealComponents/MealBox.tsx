@@ -20,14 +20,14 @@ function MealBox(props: MealBoxProps) {
           </div>
         </div>
         <div className="dropdown-container">
-          <div className="breakfast-container">
-            <MealDropDown meal={Meal.Breakfast} />
+          <div className="meals-container">
+            <MealDropDown meal={Meal.Breakfast} score={3} />
           </div>
-          <div className="lunch-container">
-            <MealDropDown meal={Meal.Lunch} />
+          <div className="meals-container">
+            <MealDropDown meal={Meal.Lunch} score={4} />
           </div>
-          <div className="dinner-container">
-            <MealDropDown meal={Meal.Dinner} />
+          <div className="meals-container">
+            <MealDropDown meal={Meal.Dinner} score={5} />
           </div>
         </div>
       </div>
