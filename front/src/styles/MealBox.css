@@ -1,0 +1,23 @@
+#meal-box {
+  width: 47vw;
+  height: 70vh;
+  background-color: #6f3b2f;
+  border-radius: 20px;
+  margin-top: 5vh;
+}
+
+.meal-box-container {
+  display: flex;
+  justify-content: center;
+}
+
+.date-text {
+  color: #e5ffd0;
+  font-size: 4.5em;
+}
+.title-line-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

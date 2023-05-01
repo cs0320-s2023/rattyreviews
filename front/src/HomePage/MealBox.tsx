@@ -1,5 +1,4 @@
-import React from "react";
-import { render } from "react-dom";
+import "./../styles/MealBox.css";
 
 interface MealBoxProps {
   dateString: String;
@@ -8,13 +7,15 @@ interface MealBoxProps {
 
 function MealBox(props: MealBoxProps) {
   return (
-    <div id="meal-box">
-      <div className="title-line-container">
-        <div className="date-text-container">
-          <p className="date-text">{props.parser(props.dateString)}</p>
-        </div>
-        <div className="info-icon">
-          <p>ℹ️</p>
+    <div className="meal-box-container">
+      <div id="meal-box">
+        <div className="title-line-container">
+          <div className="date-text-container">
+            <p className="date-text">{props.parser(props.dateString)}</p>
+          </div>
+          <div className="info-icon">
+            <p>ℹ️</p>
+          </div>
         </div>
       </div>
     </div>
