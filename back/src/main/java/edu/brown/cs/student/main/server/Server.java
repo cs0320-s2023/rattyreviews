@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server;
 import static edu.brown.cs.student.main.webscraping.ScrapeDiningMenu.getAllMenus;
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.APIHandlers.AddReview;
 import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
 import edu.brown.cs.student.main.APIHandlers.ReviewHistory;
 import edu.brown.cs.student.main.Utils.reviewController;
@@ -32,6 +33,7 @@ public class Server {
     reviewController reviewController = new reviewController();
     Spark.get("menus", new ProvideMenu());
     Spark.get("reviewHistory", new ReviewHistory(reviewController));
+    Spark.post("addReview", new AddReview(reviewController));
     System.out.println("Server started.");
   }
 }
