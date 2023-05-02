@@ -23,8 +23,6 @@ public class AddReview implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        System.out.println(request.body());
-
         Buffer neededBuff = new Buffer();
         neededBuff.writeString(request.body(), Charset.defaultCharset());
         //TODO: better err handling
@@ -32,11 +30,10 @@ public class AddReview implements Route {
         try {
             inputtedReview.SummaryReview sumRev = MapSerializer.fromJsonGeneric(neededBuff, inputtedReview.SummaryReview.class);
             for (Food.FoodItem item : sumRev.Ratings()) {
-                Review.foodReview someShit = new Review.foodReview(sumRev.UserID(), sumRev.Date(), item, sumRev.comment());
-                controller.insertReview(someShit);
+                Review.foodReview someRev = new Review.foodReview(sumRev.UserID(), sumRev.Date(), item, sumRev.comment());
+                controller.insertReview(someRev);
             }
             System.out.println(controller);
-            System.out.println(controller.getReviewDictionary());
             //TODO: better return here
             return "success!";
         } catch (JsonDataException dataException) {
