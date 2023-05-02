@@ -14,6 +14,8 @@ import spark.Response;
 import spark.Route;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddReview implements Route {
 
@@ -34,8 +36,8 @@ public class AddReview implements Route {
                 controller.insertReview(someRev);
             }
             System.out.println(controller);
-            //TODO: better return here
-            return "success!";
+
+            return MapSerializer.simpleSuccessResponse("message", controller.toString());
         } catch (JsonDataException dataException) {
             System.out.println(dataException);
         } catch (JsonEncodingException encodingException) {
