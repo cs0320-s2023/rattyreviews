@@ -45,7 +45,8 @@ public class ReviewHistory implements Route {
         }
 
         Map<String, Object> someThing = new HashMap<>();
-        someThing.put("success", this.controller.getReviewDictionary());
+        someThing.put("result", "success");
+        someThing.put("reviews", this.controller.getListOfReviews());
         String defensiveCopy = new ViewSuccessResponse().serialize(someThing);
         return defensiveCopy;
     }

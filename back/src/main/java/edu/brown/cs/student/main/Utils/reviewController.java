@@ -1,16 +1,25 @@
 package edu.brown.cs.student.main.Utils;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import edu.brown.cs.student.main.server.MapSerializer;
+import okio.Buffer;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class reviewController {
+
+  private final String REVIEW_STORAGE_PATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\reviewData\\ReviewStore.json";
 
   //would love to convert this to some external db at some point, not necessary tho
   //need something like this for title items so we can cross ref when returning menus
 
-  private Dictionary<Integer, Review.foodReview> reviewDictionary;
+  private Map<Integer, Review.foodReview> reviewDictionary;
   private int REVIEW_ID;
 
   public reviewController() {
@@ -22,14 +31,23 @@ public class reviewController {
     return this.reviewDictionary.size();
   }
 
-  public Dictionary<Integer, Review.foodReview> getReviewDictionary(){
+  public Map<Integer, Review.foodReview> getReviewDictionary(){
     return this.reviewDictionary;
+  }
+
+  public List<Review.foodReview> getListOfReviews() {
+    List<Review.foodReview> res = new ArrayList<>();
+    for (Review.foodReview rev : this.reviewDictionary.values()) {
+      res.add(rev);
+    }
+    return res;
   }
 
   public int getREVIEW_ID(){
     return this.REVIEW_ID;
   }
 
+  //TODO: need to ensure methods are in place to prevent a user from submitting several reviews at once
   public void insertReview(Review.foodReview review) {
     this.reviewDictionary.put(this.REVIEW_ID, review);
     this.REVIEW_ID++;
@@ -40,7 +58,44 @@ public class reviewController {
   }
 
   public String toString() {
-    return "there are " + getNumReviews() + " reviews in the database";
+    return "there are " + getNumReviews() + " reviews in the controller";
   }
+
+  public void clearController() {
+    this.reviewDictionary.clear();
+  }
+
+  public void addToStorage() {
+    try {
+      Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
+      System.out.println("flag 1");
+      Buffer contentBuff = new Buffer().write(Files.readAllBytes(targetPath));
+      Review.listOfFoodReview updatedContent = MapSerializer.fromJsonGeneric(contentBuff, Review.listOfFoodReview.class);
+
+      for (Review.foodReview rev : this.reviewDictionary.values()) {
+        updatedContent.reviews().add(rev);
+      }
+      System.out.println("flag 2");
+      String res = MapSerializer.toJsonTotalGeneric(updatedContent, Review.listOfFoodReview.class);
+
+      Files.writeString(targetPath, res, Charset.defaultCharset(), TRUNCATE_EXISTING);
+      clearController();
+    } catch (IOException e) {
+      Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
+      List<Review.foodReview> collectedReviews = new ArrayList<>(this.reviewDictionary.values());
+      Review.listOfFoodReview newContent = new Review.listOfFoodReview(collectedReviews);
+
+      String res = MapSerializer.toJsonTotalGeneric(newContent, Review.listOfFoodReview.class);
+
+      try {
+        Files.writeString(targetPath, res, Charset.defaultCharset());
+        clearController();
+      } catch (IOException ex2) {
+        //TODO: better err handling
+        System.err.println("OH NO");
+      }
+    }
+  }
+
 
 }

@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main.Utils;
 
+import java.util.List;
+
 public class Review {
   private String UserID;
   private String comment;
@@ -11,6 +13,8 @@ public class Review {
     this.comment = comment;
     this.star_Rating = star_Rating;
   }
+
+  public record listOfFoodReview(List<foodReview> reviews) {};
 
   public record foodReview(String UserID, String time, Food.FoodItem item, String comment){}
   //would REALLY like to have a separate, relational db for comments

@@ -15,15 +15,7 @@ import java.util.*;
 //TODO: have this be triggered once a day @ midnight for caching into a db
 
 
-
-//Work:
-  //pull in restrictions on web scrape DONE
-  //save menus to file for ez caching
-  //cry
-  //get posting working from fe
-  //create review db
   //set up 24 aggregate and scrapers
-  //piss
 
 
 
