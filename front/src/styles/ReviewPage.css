@@ -1,0 +1,86 @@
+.reviewTitle {
+    height: 5.5vh;
+    width: 13vw;
+    
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2vw;
+    color: black;
+    
+  }
+  .question1 {
+    height: 5.5vh;
+    width: 35vw;
+    border-radius: 15px;
+    margin-top: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1vw;
+    color: black;
+    
+  }
+  .question2 {
+    margin-top: 100px;
+    height: 20vh;
+    width: 75vw;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1vw;
+    color: black;
+    margin-bottom: 50px;
+  }
+ 
+
+  .question3 {
+    margin-top: 100px;
+    height: 5.5vh;
+    width: 35vw;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.25vw;
+    color: black;
+    
+  }
+
+  .button {
+    margin-top: 100px;
+    height: 5.5vh;
+    width: 13vw;
+    background-color: burlywood;
+    border-radius: 15px;
+    font-size: 2vw;
+  }
+
+  .clickedButton {
+    margin-top: auto;
+    height: 5.5vh;
+    width: 13vw;
+    background-color: green;
+    border-radius: 5px;
+    font-size: 2vw;
+  }
+
+  .inputButton {
+    height: 10vh;
+    width: 35vw;
+    border-radius: 15px;
+    font-size: .7vw;
+    margin-left: auto;
+    margin-right: auto; 
+  }
+
