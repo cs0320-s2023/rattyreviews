@@ -38,12 +38,14 @@ public class ProvideMenu implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         /**must be in format YYYY-MM-DD*/
+        //TODO: setup cache eviction
+        //TODO: do better json formatting (i.e. response: success, expires: 2023-05-21 23:43:02 UTC-04:00, listings: ...)
         LocalDate asked = LocalDate.parse(request.queryParamOrDefault("date", LocalDate.now(ZoneId.of("UTC-04:00")).toString()));
         try {
-            System.out.println("used cache");
             return new String(Files.readAllBytes(Paths.get(REL_FILE_PATH + asked.toString() + ".json")));
         } catch (IOException e) {
             try {
+                System.out.println("now scraping");
                 Map<String, Food.Menu> menuCollection = getAllMenus(asked);
                 String result = MapSerializer.toJsonGeneric(menuCollection, Food.Menu.class);
                 Path targetPath = Paths.get(REL_FILE_PATH + asked.toString() +".json");

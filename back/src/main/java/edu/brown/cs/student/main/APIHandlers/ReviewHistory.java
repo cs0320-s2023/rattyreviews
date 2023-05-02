@@ -35,13 +35,18 @@ public class ReviewHistory implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         //Just making sure that the program can properly serialize Review Objects from the backend, will change once the frontend is fully functioning
-
+        //TODO: set up filter to select for only reviews that apply for a certain day's menu
 
         if(this.controller.getReviewDictionary() == null){
-            String defensiveCopy = new ViewFailureResponse().serialize(this.response);
+            Map<String, Object> someThing = new HashMap<>();
+            someThing.put("error", "Reviews are empty!");
+            String defensiveCopy = new ViewFailureResponse().serialize(someThing);
             return defensiveCopy;
         }
-        String defensiveCopy = new ViewSuccessResponse().serialize(this.response);
+
+        Map<String, Object> someThing = new HashMap<>();
+        someThing.put("success", this.controller.getReviewDictionary());
+        String defensiveCopy = new ViewSuccessResponse().serialize(someThing);
         return defensiveCopy;
     }
 

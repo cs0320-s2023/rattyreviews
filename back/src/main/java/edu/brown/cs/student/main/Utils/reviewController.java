@@ -8,9 +8,9 @@ import java.util.List;
 public class reviewController {
 
   //would love to convert this to some external db at some point, not necessary tho
-  //need something like this for food items so we can cross ref when returning menus
+  //need something like this for title items so we can cross ref when returning menus
 
-  private Dictionary<Integer, Review> reviewDictionary;
+  private Dictionary<Integer, Review.foodReview> reviewDictionary;
   private int REVIEW_ID;
 
   public reviewController() {
@@ -22,7 +22,7 @@ public class reviewController {
     return this.reviewDictionary.size();
   }
 
-  public Dictionary<Integer, Review> getReviewDictionary(){
+  public Dictionary<Integer, Review.foodReview> getReviewDictionary(){
     return this.reviewDictionary;
   }
 
@@ -30,7 +30,7 @@ public class reviewController {
     return this.REVIEW_ID;
   }
 
-  public void insertReview(Review review) {
+  public void insertReview(Review.foodReview review) {
     this.reviewDictionary.put(this.REVIEW_ID, review);
     this.REVIEW_ID++;
   }

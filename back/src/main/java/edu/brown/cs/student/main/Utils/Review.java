@@ -1,21 +1,23 @@
 package edu.brown.cs.student.main.Utils;
 
 public class Review {
-  private String name_of_reviewer;
+  private String UserID;
   private String comment;
   private double star_Rating;
 
   //TODO: refactor to disambig names
   public Review(String name_of_reviewer, String comment, double star_Rating) {
-    this.name_of_reviewer = name_of_reviewer;
+    this.UserID = name_of_reviewer;
     this.comment = comment;
     this.star_Rating = star_Rating;
   }
 
-  public record foodReview(String name_of_reviewer, Food food, String comment, double star_Rating){}
+  public record foodReview(String UserID, String time, Food.FoodItem item, String comment){}
+  //would REALLY like to have a separate, relational db for comments
+  // also need to adjust times to not just be a string
 
-  public String getName_of_reviewer() {
-    return this.name_of_reviewer;
+  public String getUserID() {
+    return this.UserID;
   }
 
   public String getComment() {
@@ -28,7 +30,7 @@ public class Review {
 
   public String toString() {
     return "Reviewer:"
-        + this.name_of_reviewer
+        + this.UserID
         + "\n comment: "
         + this.comment
         + "\n starRating: "
