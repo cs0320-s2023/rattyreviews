@@ -1,6 +1,7 @@
 :root {
   --meal-text-color: #e5ffd0;
 }
+
 #meal-box {
   width: 47vw;
   height: 75vh;
@@ -30,8 +31,7 @@
 
 .meal-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   height: 15vh;
   background-color: #7fa465;
   width: 30vw;
@@ -51,5 +51,9 @@
 }
 
 .meal-score {
-  margin-left: 6vw;
+  margin-right: 2vw;
+}
+
+.meal-title {
+  margin-left: 2vw;
 }
