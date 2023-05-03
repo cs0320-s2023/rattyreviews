@@ -50,10 +50,24 @@
   overflow-y: auto;
 }
 
-.meal-score {
-  margin-right: 2vw;
-}
-
 .meal-title {
   margin-left: 2vw;
+}
+
+.button-score {
+  width: 5vw;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-button {
+  all: unset;
+  cursor: pointer;
+}
+
+.dropdown-icon {
+  color: var(--meal-text-color);
+  margin-top: 1vh;
+  font-size: 4rem;
+  transform: rotate(-90deg);
 }
