@@ -35,7 +35,7 @@ public class reviewController {
     return this.reviewDictionary;
   }
 
-  public List<Review.foodReview> getListOfReviews() {
+  public List<Review.foodReview> getPendingListOfReviews() {
     List<Review.foodReview> res = new ArrayList<>();
     for (Review.foodReview rev : this.reviewDictionary.values()) {
       res.add(rev);
@@ -66,22 +66,19 @@ public class reviewController {
   }
 
   public void addToStorage() {
+    Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
     try {
-      Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
-      System.out.println("flag 1");
       Buffer contentBuff = new Buffer().write(Files.readAllBytes(targetPath));
       Review.listOfFoodReview updatedContent = MapSerializer.fromJsonGeneric(contentBuff, Review.listOfFoodReview.class);
 
       for (Review.foodReview rev : this.reviewDictionary.values()) {
         updatedContent.reviews().add(rev);
       }
-      System.out.println("flag 2");
       String res = MapSerializer.toJsonTotalGeneric(updatedContent, Review.listOfFoodReview.class);
 
       Files.writeString(targetPath, res, Charset.defaultCharset(), TRUNCATE_EXISTING);
       clearController();
     } catch (IOException e) {
-      Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
       List<Review.foodReview> collectedReviews = new ArrayList<>(this.reviewDictionary.values());
       Review.listOfFoodReview newContent = new Review.listOfFoodReview(collectedReviews);
 
@@ -94,6 +91,18 @@ public class reviewController {
         //TODO: better err handling
         System.err.println("OH NO");
       }
+    }
+  }
+
+  public Review.listOfFoodReview getStoredListOfReviews() {
+    Path targetPath = Paths.get(REVIEW_STORAGE_PATH);
+    try {
+      String someSaved = new String(Files.readAllBytes(targetPath));
+      return MapSerializer.fromJsonGeneric(new Buffer().writeString(someSaved, Charset.defaultCharset()), Review.listOfFoodReview.class);
+    } catch (IOException e) {
+      System.err.println("couldn't get stored list!");
+      System.err.println(e);
+      return new Review.listOfFoodReview(new ArrayList<>());
     }
   }
 

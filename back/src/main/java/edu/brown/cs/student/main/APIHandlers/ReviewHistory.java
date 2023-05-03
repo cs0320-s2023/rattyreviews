@@ -1,10 +1,8 @@
 package edu.brown.cs.student.main.APIHandlers;
 
-import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.Utils.reviewController;
-import net.sourceforge.htmlunit.corejs.javascript.JavaToJSONConverters;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -21,9 +19,6 @@ public class ReviewHistory implements Route {
         this.controller = controller;
     }
 
-    //TODO: set up to accept reviews
-    //TODO: set up to filter out anything not being served for a target day
-
     /**
      * Provides the history of all the past reviews given to menus at the Ratty and it automatically updates each time
      * someone adds a review
@@ -35,7 +30,6 @@ public class ReviewHistory implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         //Just making sure that the program can properly serialize Review Objects from the backend, will change once the frontend is fully functioning
-        //TODO: set up filter to select for only reviews that apply for a certain day's menu
 
         if(this.controller.getReviewDictionary() == null){
             Map<String, Object> someThing = new HashMap<>();
@@ -46,7 +40,7 @@ public class ReviewHistory implements Route {
 
         Map<String, Object> someThing = new HashMap<>();
         someThing.put("result", "success");
-        someThing.put("reviews", this.controller.getListOfReviews());
+        someThing.put("reviews", this.controller.getStoredListOfReviews().reviews());
         String defensiveCopy = new ViewSuccessResponse().serialize(someThing);
         return defensiveCopy;
     }

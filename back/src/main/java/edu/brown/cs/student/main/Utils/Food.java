@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class Food {
 
-  //using records to keep things flexible / keep me from pulling hair out
-
   public record FullMenuResponse(String result, String expire, Map<String, Menu> menus) {}
 
   public record Menu(

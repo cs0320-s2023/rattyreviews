@@ -28,7 +28,6 @@ public class AddReview implements Route {
         Buffer neededBuff = new Buffer();
         neededBuff.writeString(request.body(), Charset.defaultCharset());
         //TODO: better err handling
-        //TODO: add to ongoing review file ????????
         try {
             inputtedReview.SummaryReview sumRev = MapSerializer.fromJsonGeneric(neededBuff, inputtedReview.SummaryReview.class);
             for (Food.FoodItem item : sumRev.Ratings()) {

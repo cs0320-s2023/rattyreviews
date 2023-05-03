@@ -23,7 +23,7 @@ import edu.brown.cs.student.main.Utils.Food;
 public class ProvideMenu implements Route {
 
     public final int NUM_OF_HOURS_FOR_EVICT = 0;
-    public final int NUM_OF_MINS_FOR_EVICT = 2;
+    public final int NUM_OF_MINS_FOR_EVICT = 10;
 
     public final String REL_FILE_PATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\menuData\\";
     /**
@@ -47,8 +47,8 @@ public class ProvideMenu implements Route {
     //public since this getting the menu is helpful for other systems
     public String GetMenuForDate(LocalDate asked) {
         boolean deleteFile = false;
+        Path targetPath = Paths.get(REL_FILE_PATH + asked.toString() + ".json");
         try {
-            Path targetPath = Paths.get(REL_FILE_PATH + asked.toString() + ".json");
             String someSaved = new String(Files.readAllBytes(targetPath));
             Food.FullMenuResponse someRes = MapSerializer.fromJsonGeneric(new Buffer().writeString(someSaved, Charset.defaultCharset()), Food.FullMenuResponse.class);
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
@@ -69,7 +69,6 @@ public class ProvideMenu implements Route {
                 cal.add(Calendar.MINUTE, NUM_OF_MINS_FOR_EVICT);
                 Map<String, Food.Menu> menuCollection = getAllMenus(asked);
                 String moreMenus = MapSerializer.toJsonTotalGeneric(new Food.FullMenuResponse("success", cal.getTime().toString(), menuCollection), Food.FullMenuResponse.class);
-                Path targetPath = Paths.get(REL_FILE_PATH + asked.toString() +".json");
                 if(deleteFile) { Files.delete(targetPath); }
                 Files.writeString(targetPath, moreMenus);
                 return moreMenus;
