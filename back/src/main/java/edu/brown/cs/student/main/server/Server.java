@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.APIHandlers.GetReviewsFor;
 import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
 import edu.brown.cs.student.main.APIHandlers.ReviewHistory;
 import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.scheduled.SchedScripts;
 import spark.Spark;
 
 public class Server {
@@ -36,6 +37,9 @@ public class Server {
     Spark.get("reviewHistory", new ReviewHistory(reviewController));
     Spark.get("getReviewsFor", new GetReviewsFor(reviewController));
     Spark.post("addReview", new AddReview(reviewController));
+    SchedScripts scheduler = new SchedScripts();
+    scheduler.updateMenu();
+    scheduler.storeNewReviews(reviewController);
     System.out.println("Server started.");
   }
 }

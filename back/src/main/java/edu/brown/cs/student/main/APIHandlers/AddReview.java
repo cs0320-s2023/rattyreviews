@@ -35,7 +35,7 @@ public class AddReview implements Route {
                 controller.insertReview(someRev);
             }
             System.out.println(controller);
-            controller.addToStorage();
+            //controller.addToStorage();
             return MapSerializer.simpleSuccessResponse("message", controller.toString());
         } catch (JsonDataException dataException) {
             System.out.println(dataException);
