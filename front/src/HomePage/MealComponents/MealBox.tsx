@@ -5,9 +5,11 @@ import MealDropDown from "./MealDropDown";
 interface MealBoxProps {
   dateString: String;
   parser: (date: String) => String;
+  menus: Map<String, Object>;
 }
 
 function MealBox(props: MealBoxProps) {
+  let finalmenu: Map<String, Object>;
   return (
     <div className="meal-box-container">
       <div id="meal-box">
