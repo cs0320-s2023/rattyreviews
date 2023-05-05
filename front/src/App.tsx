@@ -5,36 +5,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
 import ReviewPage from "./ReviewMealPage/ReviewPage";
 import AboutUs from "./AboutUsPage/AboutUs";
-
-interface FoodItem {
-  title: String;
-  description: String;
-  rating: Number;
-  foodRestrictions: Array<String>;
-}
-
-class FullMenuResponse {
-  breakfast: Array<FoodItem>;
-  lunch: Array<FoodItem>;
-  dinner: Array<FoodItem>;
-
-  constructor(
-    breakfast: Array<FoodItem>,
-    lunch: Array<FoodItem>,
-    dinner: Array<FoodItem>
-  ) {
-    this.breakfast = breakfast;
-    this.lunch = lunch;
-    this.dinner = dinner;
-  }
-}
-
-function isMenuResponse(json: any) {
-  if (!("menus" in json)) return false;
-  return true;
-}
+import {
+  FoodItem,
+  FullMenuResponse,
+  isMenuResponse,
+} from "./MenuResponse/ResponseHandling";
 
 function App() {
+  //TODO: CLEAN THIS PARSING UP ASAP
   function parseMeal(json: any, meal: String) {
     let comfortsEntrees: Array<FoodItem> =
       json["menus"]["" + meal]["menu"]["Comforts, entrees"];
@@ -57,8 +35,8 @@ function App() {
         if (isMenuResponse(data)) {
           //TODO: NEED NEED NEED VALIDATION HERE
           let breakfast: Array<FoodItem> = parseMeal(data, "Breakfast");
-          let lunch: Array<FoodItem> = parseMeal(data, "Breakfast");
-          let dinner: Array<FoodItem> = parseMeal(data, "Breakfast");
+          let lunch: Array<FoodItem> = parseMeal(data, "Lunch");
+          let dinner: Array<FoodItem> = parseMeal(data, "Dinner");
           setMenu(new FullMenuResponse(breakfast, lunch, dinner));
         } else {
           console.log("ERROR"); //BETTER HANDLING NEEDED
