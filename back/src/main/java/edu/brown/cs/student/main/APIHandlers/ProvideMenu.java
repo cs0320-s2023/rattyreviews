@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.APIHandlers;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import edu.brown.cs.student.main.server.MapSerializer;
 import okio.Buffer;
 import spark.Request;
@@ -11,6 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -69,16 +71,23 @@ public class ProvideMenu implements Route {
                 cal.add(Calendar.MINUTE, NUM_OF_MINS_FOR_EVICT);
                 Map<String, Food.Menu> menuCollection = getAllMenus(asked);
                 String moreMenus = MapSerializer.toJsonTotalGeneric(new Food.FullMenuResponse("success", cal.getTime().toString(), menuCollection), Food.FullMenuResponse.class);
-                if(deleteFile) { Files.delete(targetPath); }
+                if (deleteFile) {
+                    Files.delete(targetPath);
+                }
                 Files.writeString(targetPath, moreMenus);
                 return moreMenus;
             } catch (IOException ex2) {
-                System.err.println(ex2.toString());
-                return MapSerializer.simpleFailureResponse("file_failure", "file creation failed on the backend. retry request!");
+                return MapSerializer.simpleFailureResponse("error_file_failure", "file creation failed on the backend. retry request!");
+            } catch (FailingHttpStatusCodeException fhttpe) {
+                return MapSerializer.simpleFailureResponse("error_web_scraping", "dining.brown.edu appears to be down! Please verify this is true.");
+            } catch (IndexOutOfBoundsException oobe) {
+                return MapSerializer.simpleFailureResponse("error_web_scraping", "Web scraping returned unexpected structure! Date might be outside of available bounds. Please review the menu for this date on dining.brown.edu .");
             }
-        } catch (Exception e) {
-            System.err.println(e);
-            return MapSerializer.exceptionalFailureResponse(e);
+        } catch (ParseException pe) {
+            return MapSerializer.simpleFailureResponse("error_parse", "Menu file did not have a parsable expiry date! Please check formatting of menu files.");
+//        } catch (Exception e) {
+//            return MapSerializer.exceptionalFailureResponse(e);
+//        }
         }
     }
 

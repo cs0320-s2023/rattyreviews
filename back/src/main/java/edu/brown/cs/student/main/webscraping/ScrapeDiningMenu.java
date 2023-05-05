@@ -15,13 +15,10 @@ import java.util.*;
 //TODO: have this be triggered once a day @ midnight for caching into a db
 
 
-  //set up 24 aggregate and scrapers
-
-
 
 public class ScrapeDiningMenu {
 
-  public static Map<String, Food.Menu> getAllMenus(LocalDate date) {
+  public static Map<String, Food.Menu> getAllMenus(LocalDate date) throws IOException {
     WebClient webClient = new WebClient(BrowserVersion.CHROME);
     // v Quiets all the exceptions that we don't care about, especially related to ads.
     webClient.getOptions().setCssEnabled(false);
@@ -49,30 +46,34 @@ public class ScrapeDiningMenu {
               "//div[@class='c-tab__content-inner site-panel__daypart-tab-content-inner']");
       System.out.println(allDayParts.size());
 
-      //TODO: add check if these parts aren't avail/OOB. might be true for getting a date that is unfilled
-      //this is a check on allDayParts.size() != 3 btw
-      List<HtmlElement> breakfastMenu = allDayParts.get(0).getByXPath("*");
-      List<HtmlElement> lunchMenu = allDayParts.get(1).getByXPath("*");
-      List<HtmlElement> dinnerMenu = allDayParts.get(2).getByXPath("*");
-      // might want to make this immutable to make this more defensive lmao???
-      Food.Menu rattyBreakfastFoods = buildMenu(breakfastMenu);
-      Food.Menu rattyLunchFoods = buildMenu(lunchMenu);
-      Food.Menu rattyDinnerFoods = buildMenu(dinnerMenu);
+      if(allDayParts.size() == 3) {
+        List<HtmlElement> breakfastMenu = allDayParts.get(0).getByXPath("*");
+        List<HtmlElement> lunchMenu = allDayParts.get(1).getByXPath("*");
+        List<HtmlElement> dinnerMenu = allDayParts.get(2).getByXPath("*");
 
-      System.out.println(rattyBreakfastFoods);
-      System.out.println(rattyLunchFoods);
-      System.out.println(rattyDinnerFoods);
+        Food.Menu rattyBreakfastFoods = buildMenu(breakfastMenu);
+        Food.Menu rattyLunchFoods = buildMenu(lunchMenu);
+        Food.Menu rattyDinnerFoods = buildMenu(dinnerMenu);
 
-      Map<String, Food.Menu> finalMenus = new HashMap<>();
-      finalMenus.put("Breakfast", rattyBreakfastFoods);
-      finalMenus.put("Lunch", rattyLunchFoods);
-      finalMenus.put("Dinner", rattyDinnerFoods);
-      return finalMenus;
+//        System.out.println(rattyBreakfastFoods);
+//        System.out.println(rattyLunchFoods);
+//        System.out.println(rattyDinnerFoods);
 
+        Map<String, Food.Menu> finalMenus = new HashMap<>();
+        finalMenus.put("Breakfast", rattyBreakfastFoods);
+        finalMenus.put("Lunch", rattyLunchFoods);
+        finalMenus.put("Dinner", rattyDinnerFoods);
+        return finalMenus;
+      } else {
+        throw new IndexOutOfBoundsException();
+      }
     } catch (IOException e) {
-      System.out.println("An error occurred: " + e);
+      throw e;
+    } catch (FailingHttpStatusCodeException fhttpe) {
+      throw fhttpe;
+    } catch (IndexOutOfBoundsException oobe) {
+      throw oobe;
     }
-    return null;
   }
 
 
@@ -122,8 +123,6 @@ public class ScrapeDiningMenu {
       Optional<String> iconRes = dietaryDisambiguator(icon.getAttribute("title"));
       iconRes.ifPresent(str -> dietaryRestrictions.add(str));
     }
-
-    //TODO: pull rating so it's not sentinal val.
     return new Food.FoodItem(foodTitle, foodDesc, -1, dietaryRestrictions);
   }
 

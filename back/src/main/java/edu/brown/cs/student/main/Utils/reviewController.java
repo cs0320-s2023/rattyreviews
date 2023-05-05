@@ -100,6 +100,7 @@ public class reviewController {
       String someSaved = new String(Files.readAllBytes(targetPath));
       return MapSerializer.fromJsonGeneric(new Buffer().writeString(someSaved, Charset.defaultCharset()), Review.listOfFoodReview.class);
     } catch (IOException e) {
+      //Want this to return nothing-- maybe there was just a request for a file that doesn't exist yet
       System.err.println("couldn't get stored list!");
       System.err.println(e);
       return new Review.listOfFoodReview(new ArrayList<>());

@@ -17,26 +17,25 @@ public class SchedScripts {
             Executors.newScheduledThreadPool(1);
 
     public void updateMenu() {
-        LocalDate current = LocalDate.now(ZoneId.of("UTC-04:00"));
         Runnable fileUpdater = () -> {
+            LocalDate current = LocalDate.now(ZoneId.of("UTC-04:00"));
             new ProvideMenu().GetMenuForDate(current);
-            System.out.println("updated menu");
+            System.out.println("updated menu " + Calendar.getInstance().getTime());
         };
         ScheduledFuture<?> fileHandler =
                 scheduler.scheduleAtFixedRate(fileUpdater, 0, 5, MINUTES);
         Runnable canceller = () -> fileHandler.cancel(false);
-        scheduler.schedule(canceller, 30, DAYS);
+        //scheduler.schedule(canceller, 30, DAYS);
     }
 
     public void storeNewReviews(reviewController rc) {
-        LocalDate current = LocalDate.now(ZoneId.of("UTC-04:00"));
         Runnable fileUpdater = () -> {
             rc.addToStorage();
-            System.out.println("stored reviews");
+            System.out.println("stored reviews " + Calendar.getInstance().getTime());
         };
         ScheduledFuture<?> fileHandler =
                 scheduler.scheduleAtFixedRate(fileUpdater, 1, 5, MINUTES);
         Runnable canceller = () -> fileHandler.cancel(false);
-        scheduler.schedule(canceller, 30, DAYS);
+        //scheduler.schedule(canceller, 30, DAYS);
     }
 }

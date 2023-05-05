@@ -29,11 +29,10 @@ public class ReviewHistory implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        //Just making sure that the program can properly serialize Review Objects from the backend, will change once the frontend is fully functioning
-
         if(this.controller.getReviewDictionary() == null){
             Map<String, Object> someThing = new HashMap<>();
-            someThing.put("error", "Reviews are empty!");
+            someThing.put("result", "error_data_unavailable");
+            someThing.put("error_data_unavailable", "Reviews are empty!");
             String defensiveCopy = new ViewFailureResponse().serialize(someThing);
             return defensiveCopy;
         }
