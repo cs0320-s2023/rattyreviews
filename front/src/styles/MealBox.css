@@ -9,6 +9,7 @@
   border-radius: 20px;
   margin-top: 5vh;
   overflow-y: auto;
+  padding-bottom: 2.5vh;
 }
 
 .meal-box-container {
@@ -69,5 +70,59 @@
   color: var(--meal-text-color);
   margin-top: 1vh;
   font-size: 4rem;
-  transform: rotate(-90deg);
+}
+
+.food-container {
+  padding-top: 0.5vh;
+  padding-bottom: 3vh;
+  width: 28vw;
+  background-color: #7fa465;
+  margin-top: 2vh;
+  border-radius: 15px;
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+}
+
+.food-container {
+  display: flex;
+  flex-direction: column;
+}
+.rating-score {
+  display: flex;
+  flex-direction: row;
+  margin-right: 2vw;
+}
+
+.title-rating-score {
+  margin-top: 1vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.indiv-meal-title {
+  color: var(--meal-text-color);
+  font-size: 1.25rem;
+  margin-left: 1vw;
+  text-align: left;
+}
+
+.score {
+  margin-left: 1vw;
+  color: var(--meal-text-color);
+  font-size: 1.25rem;
+}
+
+.rating {
+  font-size: 1.25rem;
+}
+
+.description {
+  margin-left: 1vw;
+  margin-top: 1vh;
+  color: var(--meal-text-color);
+  inline-size: 25vw;
+  text-align: left;
 }

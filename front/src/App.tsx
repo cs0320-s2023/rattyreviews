@@ -9,24 +9,11 @@ import {
   FoodItem,
   FullMenuResponse,
   isMenuResponse,
+  parseMeal,
 } from "./MenuResponse/ResponseHandling";
 
 function App() {
   //TODO: CLEAN THIS PARSING UP ASAP
-  function parseMeal(json: any, meal: String) {
-    let comfortsEntrees: Array<FoodItem> =
-      json["menus"]["" + meal]["menu"]["Comforts, entrees"];
-    let comfortsSides: Array<FoodItem> =
-      json["menus"]["" + meal]["menu"]["Comforts, sides"];
-    let greens: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Greens"];
-    let kettles: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Kettles"];
-    let sweets: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Sweets"];
-    return comfortsEntrees
-      .concat(comfortsSides)
-      .concat(greens)
-      .concat(kettles)
-      .concat(sweets);
-  }
   const [menu, setMenu] = useState(new FullMenuResponse([], [], []));
   useEffect(() => {
     fetch("http://localhost:3232/menus")
@@ -50,7 +37,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<HomePage />}></Route>
+          <Route index element={<HomePage menu={menu} />}></Route>
           <Route path="review-meal" element={<ReviewPage />}></Route>
           <Route path="about-us" element={<AboutUs />}></Route>
         </Routes>

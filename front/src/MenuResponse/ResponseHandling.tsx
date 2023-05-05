@@ -26,5 +26,20 @@ function isMenuResponse(json: any) {
   return true;
 }
 
-export { isMenuResponse, FullMenuResponse };    export type { FoodItem };
+function parseMeal(json: any, meal: String) {
+  let comfortsEntrees: Array<FoodItem> =
+    json["menus"]["" + meal]["menu"]["Comforts, entrees"];
+  let comfortsSides: Array<FoodItem> =
+    json["menus"]["" + meal]["menu"]["Comforts, sides"];
+  let greens: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Greens"];
+  let kettles: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Kettles"];
+  let sweets: Array<FoodItem> = json["menus"]["" + meal]["menu"]["Sweets"];
+  return comfortsEntrees
+    .concat(comfortsSides)
+    .concat(greens)
+    .concat(kettles)
+    .concat(sweets);
+}
 
+export { isMenuResponse, FullMenuResponse, parseMeal };
+export type { FoodItem };
