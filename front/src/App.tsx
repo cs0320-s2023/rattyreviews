@@ -68,7 +68,6 @@ function App() {
         console.log(err.message);
       });
   }, []);
-  console.log(menu);
   return (
     <div className="App">
       <BrowserRouter>
