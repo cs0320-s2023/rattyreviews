@@ -12,15 +12,16 @@ import {
   parseMeal,
 } from "./MenuResponse/ResponseHandling";
 import LoginPage from "./login/loginPage";
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import googClientID from "./private/googClientID";
-
 
 function App() {
   //TODO: CLEAN THIS PARSING UP ASAP
   const [menu, setMenu] = useState(new FullMenuResponse([], [], []));
+  const [date, setDate] = useState(new Date());
   useEffect(() => {
-    fetch("http://localhost:3232/menus")
+    let dateString = date.toISOString().split("T")[0];
+    fetch("http://localhost:3232/menus?date=" + dateString)
       .then((res) => res.json())
       .then((data) => {
         if (isMenuResponse(data)) {
@@ -36,22 +37,23 @@ function App() {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [date]);
   return (
     <div className="App">
       <GoogleOAuthProvider clientId={googClientID}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<HomePage menu={menu} />}></Route>
-          <Route path="review-meal" element={<ReviewPage />}></Route>
-          <Route path="about-us" element={<AboutUs />}></Route>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              index
+              element={<HomePage menu={menu} setDate={setDate} date={date} />}
+            ></Route>
+            <Route path="review-meal" element={<ReviewPage />}></Route>
+            <Route path="about-us" element={<AboutUs />}></Route>
             <Route path="loginTest" element={<LoginPage />}></Route>
-          
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
       </GoogleOAuthProvider>
     </div>
-    
   );
 }
 
