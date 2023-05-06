@@ -3,6 +3,10 @@
   /*-webkit-filter: grayscale(1);*/
 }
 
+body {
+  background-color: #b8cfa9;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 20vh;
@@ -17,4 +21,27 @@
 .navbar-container {
   display: flex;
   justify-content: center;
+}
+
+.headshot {
+  height: 300px;
+  width: 200px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px;
+  padding: 50px;
+}
+.card {
+  background-color: white;
+  margin: 30px;
+  height: 600px;
+  width: 300px;
+  border-radius: 20px;
 }
