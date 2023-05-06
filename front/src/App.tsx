@@ -47,7 +47,7 @@ function App() {
               index
               element={<HomePage menu={menu} setDate={setDate} date={date} />}
             ></Route>
-            <Route path="review-meal" element={<ReviewPage />}></Route>
+            <Route path="review-meal" element={<ReviewPage menu={menu}/>}></Route>
             <Route path="about-us" element={<AboutUs />}></Route>
             <Route path="loginTest" element={<LoginPage />}></Route>
           </Routes>

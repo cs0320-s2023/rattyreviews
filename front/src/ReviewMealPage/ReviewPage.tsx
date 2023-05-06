@@ -3,9 +3,14 @@ import {ReviewDropDown} from "./ReviewDropDown"
 import "../styles/ReviewPage.css"
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { FoodItem, FullMenuResponse } from "../MenuResponse/ResponseHandling";
 
 
-function ReviewPage() {
+interface reviewProps {
+  menu: FullMenuResponse
+}
+
+function ReviewPage(props : reviewProps) {
 
   const [isClicked1, setIsClicked1] = useState<boolean>(false); 
   const [isClicked2, setIsClicked2] = useState<boolean>(false); 
@@ -55,6 +60,30 @@ function ReviewPage() {
   }
 
   const [reviewAvailable, setReviewAvailable] = useState<boolean>(false);  
+  const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
+
+
+  function filterItems(req : string) {
+    switch(req) {
+      case "breakfast": {setDisplayedItems(props.menu.breakfast); break;}
+      case "lunch": {setDisplayedItems(props.menu.lunch); break;}
+      case "dinner": {setDisplayedItems(props.menu.dinner); break;}
+      default: {console.log("unexpected menu request!")}
+    }
+  }
+
+  // function getRatingScale() {
+  //   console.log("clicked!");
+  //   setReviewScale(
+  //     <div>
+  //       <button>1</button>
+  //       <button>2</button>
+  //       <button>3</button>
+  //       <button>4</button>
+  //       <button>5</button>
+  //     </div>
+  //   )
+  // }
 
   return (
     
@@ -62,15 +91,37 @@ function ReviewPage() {
       <NavBar />
       <LoginPage loginSwitch={setReviewAvailable}/>
       {reviewAvailable ? (
-              <div>
-                <div className="reviewTitle">
-          Review Page
-        </div><div className="question1">
-            What food item are you reviewing today?
+        //TODO: css all of this up
+        <div>
+          <div className="reviewTitle">
+            Review Page
+          </div>
+          <div>
+            <button onClick={() => {filterItems("breakfast"); console.log(displayeditems); }}>Breakfast</button>
+            <button onClick={() => {filterItems("lunch"); console.log(displayeditems)}}>Lunch</button>
+            <button onClick={() => {filterItems("dinner"); console.log(displayeditems)}}>Dinner</button>
+          </div>
+          <br/>
+
+
+          <div>
+            {
+              displayeditems.map((item) => {
+                return (<RatingComp item={item}/>)
+                })
+            }
+          </div>
+
+
+
+
+          <div className="question1">
+              What food item are you reviewing today?
             <div className="searchBar">
               <ReviewDropDown />
             </div>
-          </div><div className="question2">
+          </div>
+          <div className="question2">
             What rating would you give this food?
             <div>
               <button className={isClicked1 ? "clickedButton" : "button"} onClick={() => checkStatus(1)}>1</button>
@@ -79,18 +130,61 @@ function ReviewPage() {
               <button className={isClicked4 ? "clickedButton" : "button"} onClick={() => checkStatus(4)}>4</button>
               <button className={isClicked5 ? "clickedButton" : "button"} onClick={() => checkStatus(5)}>5</button>
             </div>
-          </div><div className="question3">
-            Please provide any additional comments on the dish
+          </div>
+          <div className="question3">
+              Please provide any additional comments on the dish
             <div>
               <input className="inputButton"></input>
             </div>
           </div>
         </div>
-          ) : (
-            <div></div>
-          )}
+      ) : (
+        <div>
+          nothing!
+        </div>
+      )}
     </div>
   )
+}
+
+interface rcProps {
+  item: FoodItem
+}
+
+function RatingComp(props : rcProps) {
+  const [ratingAvail, setRatingAvail] = useState<boolean>(true);
+  const [reviewScale, setReviewScale] = useState<JSX.Element>(<></>); 
+  const [ratingVal,setRatingVal]=useState(1);
+
+  useEffect(() => {
+    setReviewScale(
+      (<div>
+        {!ratingAvail ? (
+          <div className="rater">
+            <input type="range" id="Rating" name="Rating" min="0" max="5" step="0.5" value={ratingVal} onChange={(ev) => {setRatingVal(parseFloat(ev.target.value)); console.log(ev.target.value)}} list="markers"></input>
+            <datalist id="markers">
+              <option value="0" label=">:("></option>
+              <option value="1" label=":("></option>
+              <option value="2" label=":/"></option>
+              <option value="3" label=":|"></option>
+              <option value="4" label=":)"></option>
+              <option value="5" label=":D"></option>
+            </datalist>
+            <label htmlFor="Rating">Rating: {ratingVal}</label>
+          </div>
+          ) : (
+            <></>
+          )
+        }
+      </div>)
+    )
+  }, [ratingVal, ratingAvail])
+
+  return (
+    <div>
+      <button onClick={() => setRatingAvail(!ratingAvail)}>{props.item.title}</button>
+      {reviewScale}
+    </div>)
 }
 
 

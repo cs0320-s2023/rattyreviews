@@ -84,3 +84,28 @@
     margin-right: auto; 
   }
 
+
+  datalist {
+    display: flex;
+    justify-content: space-around;
+    width: 20vw;
+    align-self: center;
+    align-items: center;
+    margin: auto;
+  }
+  
+  option {
+    padding: 0;
+    margin: auto;
+  }
+  
+  input[type="range"] {
+    width: 20vw;
+    margin: 0;
+  }
+
+  .rater {
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+  }
