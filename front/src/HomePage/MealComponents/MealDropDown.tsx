@@ -3,6 +3,7 @@ import { FoodItem } from "../../MenuResponse/ResponseHandling";
 import "../../styles/MealBox.css";
 import Meal from "./Meal";
 import { MdArrowDropDown } from "react-icons/Md";
+import { FoodItemBox } from "./FoodItemBox";
 
 interface MealDropDownProps {
   meal: Meal;
@@ -49,25 +50,9 @@ function MealDropDown(props: MealDropDownProps) {
           </div>
         </div>
       </div>
-      {props.meals.map((item: FoodItem) => {
-        return (
-          <div className="flex-container">
-            <div
-              className="food-container"
-              style={{ display: visibility ? "none" : "flex" }}
-            >
-              <div className="title-rating-score">
-                <div className="indiv-meal-title">{item.title}</div>
-                <div className="rating-score">
-                  <div className="rating">⭐️⭐️⭐️⭐️⭐️</div>
-                  <div className="score">{item.rating.toString()}</div>
-                </div>
-              </div>
-              <div className="description">{item.description}</div>
-            </div>
-          </div>
-        );
-      })}
+      {props.meals.map((item: FoodItem) => (
+        <FoodItemBox item={item} visibility={visibility} />
+      ))}
     </div>
   );
 }
