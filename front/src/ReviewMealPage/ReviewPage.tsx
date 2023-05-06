@@ -4,8 +4,6 @@ import "../styles/ReviewPage.css"
 import { useState } from "react";
 
 
-
-
 function ReviewPage() {
 
   const [isClicked1, setIsClicked1] = useState<boolean>(false); 
@@ -54,6 +52,7 @@ function ReviewPage() {
   }
 
   return (
+    
     <div id="Review-Page">
       <NavBar />
         <div className="reviewTitle">

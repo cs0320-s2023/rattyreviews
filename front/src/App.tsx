@@ -11,6 +11,10 @@ import {
   isMenuResponse,
   parseMeal,
 } from "./MenuResponse/ResponseHandling";
+import LoginPage from "./login/loginPage";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import googClientID from "./private/googClientID";
+
 
 function App() {
   //TODO: CLEAN THIS PARSING UP ASAP
@@ -35,14 +39,19 @@ function App() {
   }, []);
   return (
     <div className="App">
+      <GoogleOAuthProvider clientId={googClientID}>
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage menu={menu} />}></Route>
           <Route path="review-meal" element={<ReviewPage />}></Route>
           <Route path="about-us" element={<AboutUs />}></Route>
+            <Route path="loginTest" element={<LoginPage />}></Route>
+          
         </Routes>
       </BrowserRouter>
+      </GoogleOAuthProvider>
     </div>
+    
   );
 }
 
