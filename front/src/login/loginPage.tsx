@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import googClientID from "../private/googClientID";
 import { useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import { googleLogout } from '@react-oauth/google';
-
-
-
+import { google } from "googleapis";
 
 
 function LoginPage() {
@@ -18,22 +16,32 @@ function LoginPage() {
     const [ profile, setProfile ] = useState<any>(null);
 
     const login = useGoogleLogin({
+        flow: "implicit",
         onSuccess: (codeResponse) => {setUser(codeResponse); console.log(codeResponse);},
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => console.log('Login Failed:', error),
+        hosted_domain: "brown.edu"
     });
 
     useEffect(
         () => {
             if (user) {
-                console.log(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`);
-
                 const requestHeaders: HeadersInit = new Headers();
                 requestHeaders.set('Authorization', `Bearer ${user.access_token}`);
                 requestHeaders.set('Accept', 'application/json');
 
-                fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                //TODO: implement this to allow for more stable pulls of user info endpoints
+                // const id_url = fetch('https://accounts.google.com/.well-known/openid-configuration')
+                // .then((res: any) => {
+                //     return res.json()
+                // })
+                // .then((resJSON: any) => {
+                //     return resJSON["userinfo_endpoint"];
+                // })
+                // .catch((err: any) => console.log(err));
+
+                fetch(`https://openidconnect.googleapis.com/v1/userinfo`, {
                     method: 'GET',
-                    headers: requestHeaders
+                    headers: requestHeaders,
                   })
                 .then((res: any) => {
                     return res.json();
@@ -41,7 +49,7 @@ function LoginPage() {
                 })
                 .then((res: any) => {
                     setProfile(res);
-                    console.log(res["name"]);
+                    console.log(res);
                 })
                 .catch((err: any) => console.log(err));
             }
@@ -57,6 +65,7 @@ function LoginPage() {
 
     return (
         <div>
+            <script src="https://accounts.google.com/gsi/client" onLoad={() => console.log('TODO: add onload function')}></script>
             <h2>React Google Login</h2>
             <br />
             <br />
@@ -75,63 +84,6 @@ function LoginPage() {
             )}
         </div>
     );
-
-
-   
-// const login = useGoogleLogin({
-//     onSuccess: codeResponse => console.log(codeResponse),
-//     flow: 'auth-code',
-//   });
-
-//   return (
-    
-//     <div id="Review-Page">
-//       <NavBar />
-
-      
-
-//       {/* <button onClick={() => login()}>
-//         {}
-//         Sign in with Google 🚀{' '}
-//     </button> */}
-
-//         {/* <GoogleOAuthProvider clientId={googClientID}>
-//                 <GoogleLogin
-//             onSuccess={credentialResponse => {
-//                 console.log(credentialResponse);
-//             }}
-//             onError={() => {
-//                 console.log('Login Failed');
-//             }}
-//             />
-//         </GoogleOAuthProvider> */}
-
-    
-
-
-
-//       {/* <NavBar />
-//       <meta name="referrer" content="no-referrer-when-downgrade" />
-//       <script src="https://accounts.google.com/gsi/client" async defer></script>
-//       <div id="g_id_onload"
-//             data-client_id="102338677234-big7ro0m6h2vt024g1hho71bu3vmbbs1.apps.googleusercontent.com"
-//             data-context="signin"
-//             data-ux_mode="popup"
-//             data-login_uri="http://localhost:5173/login"
-//             data-nonce=""
-//             data-auto_prompt="false">
-//         </div>
-
-//         <div class="g_id_signin"
-//             data-type="standard"
-//             data-shape="rectangular"
-//             data-theme="outline"
-//             data-text="signin_with"
-//             data-size="large"
-//             data-logo_alignment="left">
-//         </div> */}
-//     </div>
-//   );
 }
 
 export default LoginPage;
