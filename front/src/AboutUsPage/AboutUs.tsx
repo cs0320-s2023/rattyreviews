@@ -1,5 +1,6 @@
 import { NavBar } from "./../NavBar/NavBar";
 //import TeamBox from "./TeamComponents/TeamBox";
+// import headshots from "./public"
 
 // import prop data (JSON) or directly stgore JSON
 // map over list of data and make component called profile which contains a picture and description 
@@ -23,7 +24,7 @@ const team: TeamMember[] = [
     concentration: "Computer Science",
     hometown: "New York, NY",
     favratty: "Chicken Parmesan",
-    picture: "john-doe.jpg",
+    picture: "https://i.imgur.com/o8wR0um.jpg",
   },
   {
     name: "Akshay Mehta",
@@ -31,7 +32,7 @@ const team: TeamMember[] = [
     concentration: "Computer Science",
     hometown: "Los Angeles, CA",
     favratty: "Avocado Toast",
-    picture: "jane-smith.jpg",
+    picture: "https://i.imgur.com/o8wR0um.jpg",
   },
   {
     name: "Yonas Amha",
@@ -39,7 +40,7 @@ const team: TeamMember[] = [
     concentration: "Business",
     hometown: "Chicago, IL",
     favratty: "Deep Dish Pizza",
-    picture: "bob-johnson.jpg",
+    picture: "https://i.imgur.com/o8wR0um.jpg",
   },
   {
     name: "Shouri Akarapu",
@@ -47,7 +48,7 @@ const team: TeamMember[] = [
     concentration: "Apma-CS, Econ",
     hometown: "Norwalk, CT",
     favratty: "Buffalo Mac N Cheese",
-    picture: "sarah-lee.jpg",
+    picture: "https://i.imgur.com/o8wR0um.jpg",
   },
 ];
 
@@ -56,16 +57,18 @@ function AboutUs() {
     <div id="About-Us">
       <NavBar />
       <h1>Meet Our Team</h1>
-      {team.map((member) => (
-        <div key={member.name}>
-          <img src={member.picture} alt={member.name} />
+      <div className="card-flex">
+        {team.map((member) => (
+        <div className="card" key={member.name}>
+          <img className="headshot" src={member.picture} alt={member.name} />
           <h2>{member.name}</h2>
           <p>Year: {member.year}</p>
           <p>Concentration: {member.concentration}</p>
           <p>Hometown: {member.hometown}</p>
           <p>Favorite Ratty Meal: {member.favratty}</p>
         </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
