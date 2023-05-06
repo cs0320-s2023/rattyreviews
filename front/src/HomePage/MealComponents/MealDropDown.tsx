@@ -39,7 +39,9 @@ function MealDropDown(props: MealDropDownProps) {
               <button
                 className="dropdown-button"
                 onClick={() => setVisibility(!visibility)}
-                style={{ transform: visibility ? "rotate(-90deg)" : "" }}
+                style={{
+                  transform: visibility ? "rotate(-90deg)" : "rotate(0)",
+                }}
               >
                 <MdArrowDropDown className="dropdown-icon" />
               </button>
