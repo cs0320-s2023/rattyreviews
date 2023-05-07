@@ -2,17 +2,20 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   FoodItem,
   FullMenuResponse,
+  Review,
 } from "../../MenuResponse/ResponseHandling";
 import "./../../styles/MealBox.css";
 import Meal from "./Meal";
 import MealDropDown from "./MealDropDown";
 import { MdArrowDropDown } from "react-icons/Md";
+import { AverageScore } from "./ScoreCalculators/AverageScore";
 
 interface MealBoxProps {
   date: Date;
   parser: (date: String) => String;
   menu: FullMenuResponse;
   setDate: Dispatch<SetStateAction<Date>>;
+  reviews: Array<Review>;
 }
 
 function MealBox(props: MealBoxProps) {
@@ -68,7 +71,10 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Breakfast}
-                score={3}
+                score={AverageScore(
+                  props.reviews,
+                  props.menu.breakfast
+                ).toFixed(1)}
                 meals={
                   filterKey == "none"
                     ? props.menu.breakfast
@@ -76,12 +82,13 @@ function MealBox(props: MealBoxProps) {
                         item.foodRestrictions.includes(filterKey)
                       )
                 }
+                reviews={props.reviews}
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Lunch}
-                score={4}
+                score={AverageScore(props.reviews, props.menu.lunch).toFixed(1)}
                 meals={
                   filterKey == "none"
                     ? props.menu.lunch
@@ -89,12 +96,15 @@ function MealBox(props: MealBoxProps) {
                         item.foodRestrictions.includes(filterKey)
                       )
                 }
+                reviews={props.reviews}
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Dinner}
-                score={5}
+                score={AverageScore(props.reviews, props.menu.dinner).toFixed(
+                  1
+                )}
                 meals={
                   filterKey == "none"
                     ? props.menu.dinner
@@ -102,6 +112,7 @@ function MealBox(props: MealBoxProps) {
                         item.foodRestrictions.includes(filterKey)
                       )
                 }
+                reviews={props.reviews}
               />
             </div>
           </div>
