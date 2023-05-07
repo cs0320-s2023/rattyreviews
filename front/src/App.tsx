@@ -50,22 +50,6 @@ function App() {
       .catch((err) => {
         console.log(err.message);
       });
-    /*let formData = {
-      UserID: "Ian",
-      Date: "1788-06-06",
-      Ratings: [
-        {
-          title: "Roast Peppers with Broccoli",
-          description: "peri",
-          rating: 2,
-          foodRestrictions: ["vegan"],
-        },
-      ],
-    };
-    fetch("http://localhost:3232/addReview", {
-      method: "POST",
-      body: JSON.stringify(formData), // body data type must match "Content-Type" header
-    }).then(() => console.log(JSON.stringify(formData)));*/
   }, []);
   return (
     <div className="App">
@@ -83,7 +67,10 @@ function App() {
                 />
               }
             ></Route>
-            <Route path="review-meal" element={<ReviewPage menu={menu}/>}></Route>
+            <Route
+              path="review-meal"
+              element={<ReviewPage menu={menu} />}
+            ></Route>
             <Route path="about-us" element={<AboutUs />}></Route>
             <Route path="loginTest" element={<LoginPage />}></Route>
           </Routes>

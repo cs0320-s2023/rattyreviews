@@ -56,7 +56,7 @@ function MealDropDown(props: MealDropDownProps) {
         let score = WilsonScore(props.reviews, item.title);
         return (
           <FoodItemBox
-            score={score != -1 ? score * 10 : -1}
+            score={score != -1 ? score : -1}
             item={item}
             visibility={visibility}
           />

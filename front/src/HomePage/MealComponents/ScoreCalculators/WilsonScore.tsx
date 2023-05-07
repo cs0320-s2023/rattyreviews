@@ -7,25 +7,28 @@ function WilsonScore(reviews: Array<Review>, meal: String) {
       scores.push(review.item.rating);
     }
   });
-  let totalReviews = scores.length;
+  let neg = 0;
   let pos = 0;
   scores.map((num: number) => {
-    if (num >= 2.5) pos++;
+    if (num >= 0 && num < 1) {
+      neg += 1;
+    } else if (num >= 1 && num < 2) {
+      pos += 0.25;
+      neg += 0.75;
+    } else if (num >= 2 && num < 3) {
+      pos += 0.5;
+      neg += 0.5;
+    } else if (num >= 3 && num < 4) {
+      pos += 0.75;
+      neg += 0.25;
+    } else if (num >= 4 && num <= 5) {
+      pos++;
+    }
   });
-  if (totalReviews == 0) {
+  if (pos + neg == 0) {
     return -1;
   }
-  let phat = (1.0 * pos) / totalReviews;
-  let z = 1.96;
-  return (
-    (phat +
-      (z * z) / (2 * totalReviews) -
-      z *
-        Math.sqrt(
-          (phat * (1 - phat) + (z * z) / (4 * totalReviews)) / totalReviews
-        )) /
-    (1 + (z * z) / totalReviews)
-  );
+  return (((pos / (pos + neg)) * 4 + 1) * 2) / 2;
 }
 
 export { WilsonScore };

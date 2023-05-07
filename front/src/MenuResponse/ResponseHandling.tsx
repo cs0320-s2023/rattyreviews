@@ -1,8 +1,20 @@
-interface FoodItem {
+class FoodItem {
   title: String;
   description: String;
   rating: number;
   foodRestrictions: Array<String>;
+
+  constructor(
+    title: String,
+    description: String,
+    rating: number,
+    foodRestrictions: Array<String>
+  ) {
+    this.title = title;
+    this.description = description;
+    this.rating = rating;
+    this.foodRestrictions = foodRestrictions;
+  }
 }
 
 class FullMenuResponse {
@@ -69,5 +81,5 @@ export {
   parseMeal,
   isReviewResponse,
   Review,
+  FoodItem,
 };
-export type { FoodItem };

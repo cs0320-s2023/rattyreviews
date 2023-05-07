@@ -11,7 +11,7 @@ interface FoodItemBoxProps {
 function FoodItemBox(props: FoodItemBoxProps) {
   let rating: String = "";
   if (props.score != -1) {
-    for (let i = 0; i < props.score; i++) {
+    for (let i = 0; i < Math.round(props.score); i++) {
       rating += "⭐️";
     }
   }
