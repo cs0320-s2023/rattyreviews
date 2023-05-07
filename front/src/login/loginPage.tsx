@@ -16,6 +16,7 @@ function LoginPage() {
     const [ profile, setProfile ] = useState<any>(null);
 
     const login = useGoogleLogin({
+        //TODO: switch to auth flow at some point. implicit allows for bodging while for easy auth work.
         flow: "implicit",
         onSuccess: (codeResponse) => {setUser(codeResponse); console.log(codeResponse);},
         onError: (error) => console.log('Login Failed:', error),
@@ -84,6 +85,7 @@ function LoginPage() {
             )}
         </div>
     );
+
 }
 
 export default LoginPage;
