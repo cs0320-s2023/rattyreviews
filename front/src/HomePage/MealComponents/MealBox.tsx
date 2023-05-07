@@ -1,18 +1,32 @@
-import { Dispatch, SetStateAction } from "react";
-import { FullMenuResponse } from "../../MenuResponse/ResponseHandling";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  FoodItem,
+  FullMenuResponse,
+  Review,
+} from "../../MenuResponse/ResponseHandling";
 import "./../../styles/MealBox.css";
 import Meal from "./Meal";
 import MealDropDown from "./MealDropDown";
 import { MdArrowDropDown } from "react-icons/Md";
+import { AverageScore } from "./ScoreCalculators/AverageScore";
 
 interface MealBoxProps {
   date: Date;
   parser: (date: String) => String;
   menu: FullMenuResponse;
   setDate: Dispatch<SetStateAction<Date>>;
+  reviews: Array<Review>;
 }
 
 function MealBox(props: MealBoxProps) {
+  const [filterKey, setFilterKey] = useState("none");
+  let dietRestrictions: Array<String> = [
+    "none",
+    "vegetarian",
+    "vegan",
+    "without gluten",
+    "halal",
+  ];
   return (
     <div className="meal-control-container">
       <div className="left-arrow-container">
@@ -43,26 +57,62 @@ function MealBox(props: MealBoxProps) {
               <p>ℹ️</p>
             </div>
           </div>
+          <div className="filter-container">
+            <select
+              name="filter"
+              onChange={(event) => setFilterKey(event.target.value)}
+            >
+              {dietRestrictions.map((restriction: String) => (
+                <option>{restriction}</option>
+              ))}
+            </select>
+          </div>
           <div className="dropdown-container">
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Breakfast}
-                score={3}
-                meals={props.menu.breakfast}
+                score={AverageScore(
+                  props.reviews,
+                  props.menu.breakfast
+                ).toFixed(1)}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.breakfast
+                    : props.menu.breakfast.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
+                reviews={props.reviews}
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Lunch}
-                score={4}
-                meals={props.menu.lunch}
+                score={AverageScore(props.reviews, props.menu.lunch).toFixed(1)}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.lunch
+                    : props.menu.lunch.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
+                reviews={props.reviews}
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Dinner}
-                score={5}
-                meals={props.menu.dinner}
+                score={AverageScore(props.reviews, props.menu.dinner).toFixed(
+                  1
+                )}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.dinner
+                    : props.menu.dinner.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
+                reviews={props.reviews}
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
 interface FoodItem {
   title: String;
   description: String;
-  rating: Number;
+  rating: number;
   foodRestrictions: Array<String>;
 }
 
@@ -21,8 +21,30 @@ class FullMenuResponse {
   }
 }
 
+class Review {
+  UserID: String;
+  time: String;
+  item: FoodItem;
+
+  constructor(userID: String, time: String, item: FoodItem) {
+    this.UserID = userID;
+    this.time = time;
+    this.item = item;
+  }
+}
+
+interface ReviewResponse<T> {
+  result: String;
+  reviews: Array<T>;
+}
+
 function isMenuResponse(json: any) {
   if (!("menus" in json)) return false;
+  return true;
+}
+
+function isReviewResponse(json: any): json is ReviewResponse<Review> {
+  if (!("reviews" in json)) return false;
   return true;
 }
 
@@ -41,5 +63,11 @@ function parseMeal(json: any, meal: String) {
     .concat(sweets);
 }
 
-export { isMenuResponse, FullMenuResponse, parseMeal };
+export {
+  isMenuResponse,
+  FullMenuResponse,
+  parseMeal,
+  isReviewResponse,
+  Review,
+};
 export type { FoodItem };

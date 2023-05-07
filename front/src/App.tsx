@@ -8,7 +8,9 @@ import AboutUs from "./AboutUsPage/AboutUs";
 import {
   FoodItem,
   FullMenuResponse,
+  Review,
   isMenuResponse,
+  isReviewResponse,
   parseMeal,
 } from "./MenuResponse/ResponseHandling";
 import LoginPage from "./login/loginPage";
@@ -19,6 +21,7 @@ function App() {
   //TODO: CLEAN THIS PARSING UP ASAP
   const [menu, setMenu] = useState(new FullMenuResponse([], [], []));
   const [date, setDate] = useState(new Date());
+  const [reviews, setReviews] = useState(Array<Review>);
   useEffect(() => {
     let dateString = date.toISOString().split("T")[0];
     fetch("http://localhost:3232/menus?date=" + dateString)
@@ -37,7 +40,33 @@ function App() {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [date]);
+    fetch("http://localhost:3232/reviewHistory")
+      .then((res) => res.json())
+      .then((data) => {
+        if (isReviewResponse(data)) {
+          setReviews(data.reviews);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    /*let formData = {
+      UserID: "Ian",
+      Date: "1788-06-06",
+      Ratings: [
+        {
+          title: "Roast Peppers with Broccoli",
+          description: "peri",
+          rating: 2,
+          foodRestrictions: ["vegan"],
+        },
+      ],
+    };
+    fetch("http://localhost:3232/addReview", {
+      method: "POST",
+      body: JSON.stringify(formData), // body data type must match "Content-Type" header
+    }).then(() => console.log(JSON.stringify(formData)));*/
+  }, []);
   return (
     <div className="App">
       <GoogleOAuthProvider clientId={googClientID}>
@@ -45,7 +74,14 @@ function App() {
           <Routes>
             <Route
               index
-              element={<HomePage menu={menu} setDate={setDate} date={date} />}
+              element={
+                <HomePage
+                  menu={menu}
+                  setDate={setDate}
+                  date={date}
+                  reviews={reviews}
+                />
+              }
             ></Route>
             <Route path="review-meal" element={<ReviewPage menu={menu}/>}></Route>
             <Route path="about-us" element={<AboutUs />}></Route>

@@ -5,9 +5,16 @@ import "../../styles/MealBox.css";
 interface FoodItemBoxProps {
   item: FoodItem;
   visibility: Boolean;
+  score: number;
 }
 
 function FoodItemBox(props: FoodItemBoxProps) {
+  let rating: String = "";
+  if (props.score != -1) {
+    for (let i = 0; i < props.score; i++) {
+      rating += "⭐️";
+    }
+  }
   let lastIndex = props.item.foodRestrictions.length - 1;
   return (
     <div className="flex-container">
@@ -18,8 +25,8 @@ function FoodItemBox(props: FoodItemBoxProps) {
         <div className="title-rating-score">
           <div className="indiv-meal-title">{props.item.title}</div>
           <div className="rating-score">
-            <div className="rating">⭐️⭐️⭐️⭐️⭐️</div>
-            <div className="score">{props.item.rating.toString()}</div>
+            <div className="rating">{rating}</div>
+            <div className="score">{props.score.toFixed(1)}</div>
           </div>
         </div>
         <div className="description">

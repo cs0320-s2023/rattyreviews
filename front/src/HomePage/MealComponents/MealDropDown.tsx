@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { FoodItem } from "../../MenuResponse/ResponseHandling";
+import { FoodItem, Review } from "../../MenuResponse/ResponseHandling";
 import "../../styles/MealBox.css";
 import Meal from "./Meal";
 import { MdArrowDropDown } from "react-icons/Md";
 import { FoodItemBox } from "./FoodItemBox";
+import { WilsonScore } from "./ScoreCalculators/WilsonScore";
 
 interface MealDropDownProps {
   meal: Meal;
-  score: Number;
+  score: String;
   meals: Array<FoodItem>;
+  reviews: Array<Review>;
 }
 
 function MealDropDown(props: MealDropDownProps) {
@@ -34,7 +36,7 @@ function MealDropDown(props: MealDropDownProps) {
         <div className="button-score-container">
           <div className="button-score">
             <div className="meal-score meal-text">
-              <p>{props.score.toString()}</p>
+              <p>{props.score}</p>
             </div>
             <div className="dropdown-button-container">
               <button
@@ -50,9 +52,16 @@ function MealDropDown(props: MealDropDownProps) {
           </div>
         </div>
       </div>
-      {props.meals.map((item: FoodItem) => (
-        <FoodItemBox item={item} visibility={visibility} />
-      ))}
+      {props.meals.map((item: FoodItem) => {
+        let score = WilsonScore(props.reviews, item.title);
+        return (
+          <FoodItemBox
+            score={score != -1 ? score * 10 : -1}
+            item={item}
+            visibility={visibility}
+          />
+        );
+      })}
     </div>
   );
 }
