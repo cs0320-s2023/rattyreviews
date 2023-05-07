@@ -1,5 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
-import { FullMenuResponse } from "../../MenuResponse/ResponseHandling";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  FoodItem,
+  FullMenuResponse,
+} from "../../MenuResponse/ResponseHandling";
 import "./../../styles/MealBox.css";
 import Meal from "./Meal";
 import MealDropDown from "./MealDropDown";
@@ -13,6 +16,14 @@ interface MealBoxProps {
 }
 
 function MealBox(props: MealBoxProps) {
+  const [filterKey, setFilterKey] = useState("none");
+  let dietRestrictions: Array<String> = [
+    "none",
+    "vegetarian",
+    "vegan",
+    "without gluten",
+    "halal",
+  ];
   return (
     <div className="meal-control-container">
       <div className="left-arrow-container">
@@ -43,26 +54,54 @@ function MealBox(props: MealBoxProps) {
               <p>ℹ️</p>
             </div>
           </div>
+          <div className="filter-container">
+            <select
+              name="filter"
+              onChange={(event) => setFilterKey(event.target.value)}
+            >
+              {dietRestrictions.map((restriction: String) => (
+                <option>{restriction}</option>
+              ))}
+            </select>
+          </div>
           <div className="dropdown-container">
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Breakfast}
                 score={3}
-                meals={props.menu.breakfast}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.breakfast
+                    : props.menu.breakfast.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Lunch}
                 score={4}
-                meals={props.menu.lunch}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.lunch
+                    : props.menu.lunch.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
               />
             </div>
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Dinner}
                 score={5}
-                meals={props.menu.dinner}
+                meals={
+                  filterKey == "none"
+                    ? props.menu.dinner
+                    : props.menu.dinner.filter((item: FoodItem) =>
+                        item.foodRestrictions.includes(filterKey)
+                      )
+                }
               />
             </div>
           </div>
