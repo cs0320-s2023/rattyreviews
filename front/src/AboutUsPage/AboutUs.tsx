@@ -1,12 +1,8 @@
 import { NavBar } from "./../NavBar/NavBar";
-//import TeamBox from "./TeamComponents/TeamBox";
 // import headshots from "./public"
-
-// import prop data (JSON) or directly stgore JSON
-// map over list of data and make component called profile which contains a picture and description 
 import React from "react";
 
-//import TeamMembers from "./../AboutUsPage/TeamComponents/TeamMembers";
+
 
 interface TeamMember {
   name: string;
@@ -36,11 +32,11 @@ const team: TeamMember[] = [
   },
   {
     name: "Yonas Amha",
-    year: "2026",
-    concentration: "Business",
-    hometown: "Chicago, IL",
-    favratty: "Deep Dish Pizza",
-    picture: "https://i.imgur.com/o8wR0um.jpg",
+    year: "2025",
+    concentration: "Computer Science",
+    hometown: "Annandale, VA",
+    favratty: "Eggs with onions and tomatoes",
+    picture: "https://i.imgur.com/3BzaSfc.png",
   },
   {
     name: "Shouri Akarapu",
@@ -48,7 +44,7 @@ const team: TeamMember[] = [
     concentration: "Apma-CS, Econ",
     hometown: "Norwalk, CT",
     favratty: "Buffalo Mac N Cheese",
-    picture: "https://i.imgur.com/o8wR0um.jpg",
+    picture: "https://i.imgur.com/2rjhj3t.jpg",
   },
 ];
 
