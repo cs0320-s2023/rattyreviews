@@ -2,8 +2,6 @@ import { NavBar } from "./../NavBar/NavBar";
 // import headshots from "./public"
 import React from "react";
 
-
-
 interface TeamMember {
   name: string;
   year: string;
