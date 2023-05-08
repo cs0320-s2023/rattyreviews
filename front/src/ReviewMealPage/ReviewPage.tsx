@@ -70,6 +70,7 @@ function ReviewPage(props: reviewProps) {
         break;
       }
       default: {
+        setDisplayedItems([]);
         console.log("unexpected menu request!");
       }
     }
@@ -88,28 +89,17 @@ function ReviewPage(props: reviewProps) {
         <div className="review-page">
           <div className="review-container">
             {<div className="review-title">Review A Meal</div>}
-            <div>
-              <button
-                onClick={() => {
-                  filterItems("breakfast");
+            <div className="dropdown-meals">
+              <select
+                onChange={(e) => {
+                  filterItems(e.target.value.toLowerCase());
                 }}
               >
-                Breakfast
-              </button>
-              <button
-                onClick={() => {
-                  filterItems("lunch");
-                }}
-              >
-                Lunch
-              </button>
-              <button
-                onClick={() => {
-                  filterItems("dinner");
-                }}
-              >
-                Dinner
-              </button>
+                <option>Select a Meal</option>
+                <option>Breakfast</option>
+                <option>Lunch</option>
+                <option>Dinner</option>
+              </select>
             </div>
             <br />
 
@@ -130,9 +120,9 @@ function ReviewPage(props: reviewProps) {
             </div>
 
             <div className="question3">
-              Please provide any additional comments on your meal today:
               <div>
                 <textarea
+                  placeholder="Describe your experience with this meal"
                   className="commentBox"
                   value={inputBoxValue}
                   onChange={(event) => setInputBoxValue(event.target.value)}

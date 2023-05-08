@@ -1,31 +1,3 @@
-.question1 {
-  height: 5.5vh;
-  width: 35vw;
-  border-radius: 15px;
-  margin-top: auto;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1vw;
-  color: black;
-}
-.question2 {
-  margin-top: 100px;
-  height: 20vh;
-  width: 75vw;
-  border-radius: 15px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1vw;
-  color: black;
-  margin-bottom: 50px;
-}
-
 .question3 {
   height: fit-content;
   width: 35vw;
@@ -36,7 +8,7 @@
   margin-left: auto;
   margin-right: auto;
   font-size: 1em;
-  color: black;
+  color: #e5ffd0;
 }
 
 .button {
@@ -101,12 +73,15 @@ input[type="range"] {
 .review-container {
   background-color: #6f3b2f;
   width: 50vw;
-  height: 70vh;
+  height: 74vh;
+  padding-top: 1vh;
   padding-bottom: 2vh;
+  padding-left: 5vw;
+  padding-right: 5vw;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow-y: auto;
 }
 
@@ -129,4 +104,10 @@ input[type="range"] {
 .review-title {
   font-size: 4vw;
   color: #e5ffd0;
+}
+
+.dropdown-meals {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
