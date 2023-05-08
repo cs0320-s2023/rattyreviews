@@ -1,119 +1,132 @@
-.reviewTitle {
-    height: 5.5vh;
-    width: 13vw;
-    
-    border-radius: 15px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 2vw;
-    color: black;
-    
-  }
-  .question1 {
-    height: 5.5vh;
-    width: 35vw;
-    border-radius: 15px;
-    margin-top: auto;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1vw;
-    color: black;
-    
-  }
-  .question2 {
-    margin-top: 100px;
-    height: 20vh;
-    width: 75vw;
-    border-radius: 15px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1vw;
-    color: black;
-    margin-bottom: 50px;
-  }
- 
+.question1 {
+  height: 5.5vh;
+  width: 35vw;
+  border-radius: 15px;
+  margin-top: auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1vw;
+  color: black;
+}
+.question2 {
+  margin-top: 100px;
+  height: 20vh;
+  width: 75vw;
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1vw;
+  color: black;
+  margin-bottom: 50px;
+}
 
-  .question3 {
-    height: fit-content;
-    width: 35vw;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1em;
-    color: black;
-    
-  }
+.question3 {
+  height: fit-content;
+  width: 35vw;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+  color: black;
+}
 
-  .button {
-    margin-top: 100px;
-    height: 5.5vh;
-    width: 13vw;
-    background-color: burlywood;
-    border-radius: 15px;
-    font-size: 2vw;
-  }
+.button {
+  margin-top: 100px;
+  height: 5.5vh;
+  width: 13vw;
+  background-color: burlywood;
+  border-radius: 15px;
+  font-size: 2vw;
+}
 
-  .clickedButton {
-    margin-top: auto;
-    height: 5.5vh;
-    width: 13vw;
-    background-color: green;
-    border-radius: 5px;
-    font-size: 2vw;
-  }
+.clickedButton {
+  margin-top: auto;
+  height: 5.5vh;
+  width: 13vw;
+  background-color: green;
+  border-radius: 5px;
+  font-size: 2vw;
+}
 
-  .commentBox {
-    height: 10vh;
-    width: 35vw;
-    border-radius: 5px;
-    margin-left: auto;
-    margin-right: auto; 
-    font-family: inherit;
-    font-size: 100%;
-  }
+.commentBox {
+  height: 10vh;
+  width: 35vw;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: inherit;
+  font-size: 100%;
+}
 
+datalist {
+  display: flex;
+  justify-content: space-around;
+  width: 20vw;
+  align-self: center;
+  align-items: center;
+  margin: auto;
+}
 
-  datalist {
-    display: flex;
-    justify-content: space-around;
-    width: 20vw;
-    align-self: center;
-    align-items: center;
-    margin: auto;
-  }
-  
-  option {
-    padding: 0;
-    margin: auto;
-  }
-  
-  input[type="range"] {
-    width: 20vw;
-    margin: 0;
-  }
+option {
+  padding: 0;
+  margin: auto;
+}
 
-  .rater {
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-  }
+input[type="range"] {
+  width: 20vw;
+  margin: 0;
+}
 
+.rater {
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
 
-  .loggedInArea {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-  }
+.loggedInArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-container {
+  background-color: #6f3b2f;
+  width: 50vw;
+  height: 70vh;
+  padding-bottom: 2vh;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+.review-page {
+  display: flex;
+  justify-content: center;
+}
+
+.item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.item-rating {
+  display: flex;
+  flex-direction: row;
+}
+
+.review-title {
+  font-size: 4vw;
+  color: #e5ffd0;
+}

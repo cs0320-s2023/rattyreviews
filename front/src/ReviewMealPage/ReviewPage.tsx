@@ -3,7 +3,12 @@ import { ReviewDropDown } from "./ReviewDropDown";
 import "../styles/ReviewPage.css";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { FoodItem, FullMenuResponse, isMenuResponse, parseMeal } from "../MenuResponse/ResponseHandling";
+import {
+  FoodItem,
+  FullMenuResponse,
+  isMenuResponse,
+  parseMeal,
+} from "../MenuResponse/ResponseHandling";
 
 interface reviewProps {
   menu: FullMenuResponse;
@@ -20,28 +25,32 @@ function ReviewPage(props: reviewProps) {
   const [reviewAvailable, setReviewAvailable] = useState<boolean>(false);
   const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
 
-  const [todaysMenu, setTodaysMenu] = useState<FullMenuResponse>(new FullMenuResponse([], [], []));
+  const [todaysMenu, setTodaysMenu] = useState<FullMenuResponse>(
+    new FullMenuResponse([], [], [])
+  );
 
   function todaysMenuSetup() {
-    console.log("setting up!")
-    let dateComp = new Date().toLocaleDateString('en-GB', {timeZone: "EST"}).split("/");
-    let dateString = dateComp[2] + "-" +  dateComp[1] + "-" + dateComp[0];
+    console.log("setting up!");
+    let dateComp = new Date()
+      .toLocaleDateString("en-GB", { timeZone: "EST" })
+      .split("/");
+    let dateString = dateComp[2] + "-" + dateComp[1] + "-" + dateComp[0];
     fetch("http://localhost:3232/menus?date=" + dateString)
-        .then((res) => res.json())
-        .then((data) => {
-          if (isMenuResponse(data)) {
-            //TODO: NEED NEED NEED VALIDATION HERE
-            let breakfast: Array<FoodItem> = parseMeal(data, "Breakfast");
-            let lunch: Array<FoodItem> = parseMeal(data, "Lunch");
-            let dinner: Array<FoodItem> = parseMeal(data, "Dinner");
-            setTodaysMenu(new FullMenuResponse(breakfast, lunch, dinner));
-          } else {
-            console.log("ERROR"); //BETTER HANDLING NEEDED
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMenuResponse(data)) {
+          //TODO: NEED NEED NEED VALIDATION HERE
+          let breakfast: Array<FoodItem> = parseMeal(data, "Breakfast");
+          let lunch: Array<FoodItem> = parseMeal(data, "Lunch");
+          let dinner: Array<FoodItem> = parseMeal(data, "Dinner");
+          setTodaysMenu(new FullMenuResponse(breakfast, lunch, dinner));
+        } else {
+          console.log("ERROR"); //BETTER HANDLING NEEDED
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   function filterItems(req: string) {
@@ -66,86 +75,91 @@ function ReviewPage(props: reviewProps) {
     }
   }
 
-
   return (
     <div id="Review-Page">
       <NavBar />
-      <LoginPage loginSwitch={setReviewAvailable} setUserID={setUserID} loginCallback={() => todaysMenuSetup()}/>
+      <LoginPage
+        loginSwitch={setReviewAvailable}
+        setUserID={setUserID}
+        loginCallback={() => todaysMenuSetup()}
+      />
       {reviewAvailable ? (
         //TODO: css all of this up
-        <div>
-          {/* <div className="reviewTitle">Review Page</div> */}
-          <div>
-            <button
-              onClick={() => {
-                filterItems("breakfast");
-              }}
-            >
-              Breakfast
-            </button>
-            <button
-              onClick={() => {
-                filterItems("lunch");
-              }}
-            >
-              Lunch
-            </button>
-            <button
-              onClick={() => {
-                filterItems("dinner");
-              }}
-            >
-              Dinner
-            </button>
-          </div>
-          <br />
-
-          <div>
-            {displayeditems.map((item) => {
-              return (
-                <RatingComp
-                  item={item}
-                  ratingVal={ratingVal}
-                  setOpenItems={setOpenItems}
-                  setRatingVal={setRatingVal}
-                  openItems={openItems}
-                  justSwitchedMenu={justSwitchedMenu}
-                  setJustSwitchedMenu={setJustSwitchedMenu}
-                />
-              );
-            })}
-          </div>
-
-          <div className="question3">
-            Please provide any additional comments on your meal today:
+        <div className="review-page">
+          <div className="review-container">
+            {<div className="review-title">Review A Meal</div>}
             <div>
-              <textarea
-                className="commentBox"
-                value={inputBoxValue}
-                onChange={(event) => setInputBoxValue(event.target.value)}
-              ></textarea>
+              <button
+                onClick={() => {
+                  filterItems("breakfast");
+                }}
+              >
+                Breakfast
+              </button>
+              <button
+                onClick={() => {
+                  filterItems("lunch");
+                }}
+              >
+                Lunch
+              </button>
+              <button
+                onClick={() => {
+                  filterItems("dinner");
+                }}
+              >
+                Dinner
+              </button>
             </div>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                if (openItems != undefined) {
-                  setInputBoxValue("");
-                  let formData = {
-                    UserID: userID,
-                    Date: new Date().toString(),
-                    Ratings: openItems,
-                    comment: inputBoxValue
-                  };
-                  fetch("http://localhost:3232/addReview", {
-                    method: "POST",
-                    body: JSON.stringify(formData), // body data type must match "Content-Type" header
-                  }).then(() => console.log("Success"));
-                }
-              }}
-            >
-              submit
-            </button>
+            <br />
+
+            <div className="item-container">
+              {displayeditems.map((item) => {
+                return (
+                  <RatingComp
+                    item={item}
+                    ratingVal={ratingVal}
+                    setOpenItems={setOpenItems}
+                    setRatingVal={setRatingVal}
+                    openItems={openItems}
+                    justSwitchedMenu={justSwitchedMenu}
+                    setJustSwitchedMenu={setJustSwitchedMenu}
+                  />
+                );
+              })}
+            </div>
+
+            <div className="question3">
+              Please provide any additional comments on your meal today:
+              <div>
+                <textarea
+                  className="commentBox"
+                  value={inputBoxValue}
+                  onChange={(event) => setInputBoxValue(event.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  if (openItems != undefined) {
+                    setInputBoxValue("");
+                    let formData = {
+                      UserID: userID,
+                      Date: new Date().toString(),
+                      Ratings: openItems,
+                      comment: inputBoxValue,
+                    };
+                    fetch("http://localhost:3232/addReview", {
+                      method: "POST",
+                      body: JSON.stringify(formData), // body data type must match "Content-Type" header
+                    }).then(() => console.log("Success"));
+                  }
+                }}
+              >
+                submit
+              </button>
+            </div>
           </div>
         </div>
       ) : (
@@ -171,13 +185,13 @@ function RatingComp(props: rcProps) {
   const [itemRate, setItemRate] = useState<number>(0);
 
   useEffect(() => {
-    if(props.justSwitchedMenu) {
-      console.log(props.item.title)
+    if (props.justSwitchedMenu) {
+      console.log(props.item.title);
       setIsOpen(false);
       props.setJustSwitchedMenu(false);
     }
     setReviewScale(
-      <div>
+      <div className="item-rating">
         {props.openItems != undefined && isOpen ? (
           <div className="rater">
             <input
@@ -187,16 +201,17 @@ function RatingComp(props: rcProps) {
               min="0"
               max="5"
               step="0.5"
-              value={props.item.rating < 0 ? (0) : (props.item.rating)}
+              value={props.item.rating < 0 ? 0 : props.item.rating}
               onChange={(ev) => {
                 //props.setRatingVal(parseFloat(ev.target.value));
                 //console.log(ev.target.value);
                 props.item.rating = parseFloat(ev.target.value);
-                console.log(props.item.title + " now has a rating of " + props.item.rating);
+                console.log(
+                  props.item.title + " now has a rating of " + props.item.rating
+                );
                 setItemRate(props.item.rating);
                 console.log(props.openItems?.length);
                 console.log(props.openItems);
-
               }}
               list="markers"
             ></input>
@@ -218,25 +233,29 @@ function RatingComp(props: rcProps) {
   }, [itemRate, isOpen, props.justSwitchedMenu]);
 
   return (
-    <div>
-      <button onClick={() => {
-        setIsOpen(!isOpen);
-        props.setJustSwitchedMenu(false);
-        if(props.openItems != undefined) {
-          let fooItems : FoodItem[] = structuredClone(props.openItems);
-          if(!isOpen) {
-            fooItems.push(props.item);
-            props.setOpenItems(fooItems)
-            props.item.rating = 0;
-            setItemRate(0);
-          } else {
-            let goodItems : FoodItem[] = fooItems.filter((item) => {return !FoodItem.equals(props.item, item)})
-            props.setOpenItems(goodItems);
-            console.log("dropped item!")
+    <div className="item-rating">
+      <button
+        style={{ height: "3vh" }}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          props.setJustSwitchedMenu(false);
+          if (props.openItems != undefined) {
+            let fooItems: FoodItem[] = structuredClone(props.openItems);
+            if (!isOpen) {
+              fooItems.push(props.item);
+              props.setOpenItems(fooItems);
+              props.item.rating = 0;
+              setItemRate(0);
+            } else {
+              let goodItems: FoodItem[] = fooItems.filter((item) => {
+                return !FoodItem.equals(props.item, item);
+              });
+              props.setOpenItems(goodItems);
+              console.log("dropped item!");
+            }
           }
-        }
-
-        }}>
+        }}
+      >
         {props.item.title}
       </button>
       {reviewScale}
@@ -329,4 +348,3 @@ function LoginPage(props: loginProps) {
 }
 
 export default ReviewPage;
-
