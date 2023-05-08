@@ -20,17 +20,17 @@ interface TeamMember {
 const team: TeamMember[] = [
   {
     name: "Connor Flick",
-    year: "2025",
-    concentration: "Computer Science",
-    hometown: "New York, NY",
-    favratty: "Chicken Parmesan",
+    year: "2026",
+    concentration: "Computational Biology",
+    hometown: "Cincinnati, OH",
+    favratty: "Chicken Tinga",
     picture: "https://i.imgur.com/o8wR0um.jpg",
   },
   {
     name: "Akshay Mehta",
     year: "2026",
     concentration: "Computer Science",
-    hometown: "Los Angeles, CA",
+    hometown: "Los Angeles, NB",
     favratty: "Avocado Toast",
     picture: "https://i.imgur.com/o8wR0um.jpg",
   },
