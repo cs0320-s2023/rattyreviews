@@ -2,6 +2,7 @@ import { NavBar } from "./../NavBar/NavBar";
 // import headshots from "./public"
 import React from "react";
 
+// Defines TeamMember interface which specifies properties of the team members
 interface TeamMember {
   name: string;
   year: string;
@@ -11,6 +12,7 @@ interface TeamMember {
   picture: string;
 }
 
+// team constant is an array of objects that fill the "TeamMember" interface
 const team: TeamMember[] = [
   {
     name: "Connor Flick",
@@ -45,7 +47,12 @@ const team: TeamMember[] = [
     picture: "https://i.imgur.com/2rjhj3t.jpg",
   },
 ];
+// React component that returns the JSX that describes the "About Us" page.
+// has the NavBar component, a heading, and a "card-flex" div that contains the team members' info
 
+// card-flex div maps over the "team" array using the "map" method.
+// For each team member, a new "card" div is created that displays the member's info
+// The "key" attribute is set to the member's name to improve rendering performance.
 function AboutUs() {
   return (
     <div id="About-Us">
