@@ -106,15 +106,17 @@ function ReviewPage(props: reviewProps) {
             <div className="item-container">
               {displayeditems.map((item) => {
                 return (
-                  <RatingComp
-                    item={item}
-                    ratingVal={ratingVal}
-                    setOpenItems={setOpenItems}
-                    setRatingVal={setRatingVal}
-                    openItems={openItems}
-                    justSwitchedMenu={justSwitchedMenu}
-                    setJustSwitchedMenu={setJustSwitchedMenu}
-                  />
+                  <div className="individual-item">
+                    <RatingComp
+                      item={item}
+                      ratingVal={ratingVal}
+                      setOpenItems={setOpenItems}
+                      setRatingVal={setRatingVal}
+                      openItems={openItems}
+                      justSwitchedMenu={justSwitchedMenu}
+                      setJustSwitchedMenu={setJustSwitchedMenu}
+                    />
+                  </div>
                 );
               })}
             </div>
@@ -225,7 +227,7 @@ function RatingComp(props: rcProps) {
   return (
     <div className="item-rating">
       <button
-        style={{ height: "3vh" }}
+        className="item-button"
         onClick={() => {
           setIsOpen(!isOpen);
           props.setJustSwitchedMenu(false);
