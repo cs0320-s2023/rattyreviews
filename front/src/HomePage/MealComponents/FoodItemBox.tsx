@@ -26,7 +26,7 @@ function FoodItemBox(props: FoodItemBoxProps) {
           <div className="indiv-meal-title">{props.item.title}</div>
           <div className="rating-score">
             <div className="rating">{rating}</div>
-            <div className="score">{props.score.toFixed(1)}</div>
+            <div className="score">{props.score < 0 ? ("N/A") : (props.score.toFixed(1))}</div>
           </div>
         </div>
         <div className="description">

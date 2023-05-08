@@ -3,15 +3,15 @@ import { ReviewDropDown } from "./ReviewDropDown";
 import "../styles/ReviewPage.css";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { FoodItem, FullMenuResponse } from "../MenuResponse/ResponseHandling";
+import { FoodItem, FullMenuResponse, isMenuResponse, parseMeal } from "../MenuResponse/ResponseHandling";
 
 interface reviewProps {
   menu: FullMenuResponse;
 }
+//TODO: prevent multi review garbage (only one per meal!)
 
 function ReviewPage(props: reviewProps) {
   const [userID, setUserID] = useState("");
-  const [clickedItem, setClickedItem] = useState<FoodItem>();
   const [openItems, setOpenItems] = useState<Array<FoodItem>>();
   const [justSwitchedMenu, setJustSwitchedMenu] = useState<boolean>(false);
   const [ratingVal, setRatingVal] = useState(1);
@@ -20,20 +20,44 @@ function ReviewPage(props: reviewProps) {
   const [reviewAvailable, setReviewAvailable] = useState<boolean>(false);
   const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
 
+  const [todaysMenu, setTodaysMenu] = useState<FullMenuResponse>(new FullMenuResponse([], [], []));
+
+  function todaysMenuSetup() {
+    console.log("setting up!")
+    let dateComp = new Date().toLocaleDateString('en-GB', {timeZone: "EST"}).split("/");
+    let dateString = dateComp[2] + "-" +  dateComp[1] + "-" + dateComp[0];
+    fetch("http://localhost:3232/menus?date=" + dateString)
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMenuResponse(data)) {
+            //TODO: NEED NEED NEED VALIDATION HERE
+            let breakfast: Array<FoodItem> = parseMeal(data, "Breakfast");
+            let lunch: Array<FoodItem> = parseMeal(data, "Lunch");
+            let dinner: Array<FoodItem> = parseMeal(data, "Dinner");
+            setTodaysMenu(new FullMenuResponse(breakfast, lunch, dinner));
+          } else {
+            console.log("ERROR"); //BETTER HANDLING NEEDED
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+  }
+
   function filterItems(req: string) {
     setOpenItems([]);
     setJustSwitchedMenu(true);
     switch (req) {
       case "breakfast": {
-        setDisplayedItems(props.menu.breakfast);
+        setDisplayedItems(todaysMenu.breakfast);
         break;
       }
       case "lunch": {
-        setDisplayedItems(props.menu.lunch);
+        setDisplayedItems(todaysMenu.lunch);
         break;
       }
       case "dinner": {
-        setDisplayedItems(props.menu.dinner);
+        setDisplayedItems(todaysMenu.dinner);
         break;
       }
       default: {
@@ -42,10 +66,11 @@ function ReviewPage(props: reviewProps) {
     }
   }
 
+
   return (
     <div id="Review-Page">
       <NavBar />
-      <LoginPage loginSwitch={setReviewAvailable} setUserID={setUserID} />
+      <LoginPage loginSwitch={setReviewAvailable} setUserID={setUserID} loginCallback={() => todaysMenuSetup()}/>
       {reviewAvailable ? (
         //TODO: css all of this up
         <div>
@@ -92,7 +117,7 @@ function ReviewPage(props: reviewProps) {
           </div>
 
           <div className="question3">
-            Please provide any additional comments on the dish
+            Please provide any additional comments on your meal today:
             <div>
               <textarea
                 className="commentBox"
@@ -144,8 +169,6 @@ function RatingComp(props: rcProps) {
   const [reviewScale, setReviewScale] = useState<JSX.Element>(<></>);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [itemRate, setItemRate] = useState<number>(0);
-  const [localRecentMenuSwitch, setLocalRecentMenuSwitch] = useState<boolean>(false);
-
 
   useEffect(() => {
     if(props.justSwitchedMenu) {
@@ -164,7 +187,7 @@ function RatingComp(props: rcProps) {
               min="0"
               max="5"
               step="0.5"
-              value={props.item.rating}
+              value={props.item.rating < 0 ? (0) : (props.item.rating)}
               onChange={(ev) => {
                 //props.setRatingVal(parseFloat(ev.target.value));
                 //console.log(ev.target.value);
@@ -185,7 +208,7 @@ function RatingComp(props: rcProps) {
               <option value="4" label=":)"></option>
               <option value="5" label=":D"></option>
             </datalist>
-            <label htmlFor="Rating">Rating: {props.item.rating} ⭐ </label>
+            <label htmlFor="Rating">Rating: {itemRate} ⭐ </label>
           </div>
         ) : (
           <>{}</>
@@ -204,6 +227,8 @@ function RatingComp(props: rcProps) {
           if(!isOpen) {
             fooItems.push(props.item);
             props.setOpenItems(fooItems)
+            props.item.rating = 0;
+            setItemRate(0);
           } else {
             let goodItems : FoodItem[] = fooItems.filter((item) => {return !FoodItem.equals(props.item, item)})
             props.setOpenItems(goodItems);
@@ -222,6 +247,7 @@ function RatingComp(props: rcProps) {
 interface loginProps {
   loginSwitch: Dispatch<SetStateAction<boolean>>;
   setUserID: Dispatch<SetStateAction<string>>;
+  loginCallback: () => any;
 }
 
 function LoginPage(props: loginProps) {
@@ -238,6 +264,7 @@ function LoginPage(props: loginProps) {
       setUser(codeResponse);
       console.log(codeResponse);
       props.loginSwitch(true);
+      props.loginCallback();
     },
     onError: (error) => console.log("Login Failed:", error),
     hosted_domain: "brown.edu",
@@ -279,7 +306,7 @@ function LoginPage(props: loginProps) {
     setProfile(null);
     props.loginSwitch(false);
   };
-  if (profile != null) props.setUserID(profile.email);
+  if (profile != null) props.setUserID(profile.sub);
   return (
     <div>
       <script
@@ -302,3 +329,4 @@ function LoginPage(props: loginProps) {
 }
 
 export default ReviewPage;
+

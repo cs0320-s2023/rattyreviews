@@ -71,10 +71,7 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Breakfast}
-                score={AverageScore(
-                  props.reviews,
-                  props.menu.breakfast
-                ).toFixed(1)}
+                score={AverageScore(props.reviews, props.menu.breakfast) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.breakfast).toFixed(1))}
                 meals={
                   filterKey == "none"
                     ? props.menu.breakfast
@@ -88,7 +85,7 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Lunch}
-                score={AverageScore(props.reviews, props.menu.lunch).toFixed(1)}
+                score={AverageScore(props.reviews, props.menu.lunch) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.lunch).toFixed(1))}
                 meals={
                   filterKey == "none"
                     ? props.menu.lunch
@@ -102,9 +99,7 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Dinner}
-                score={AverageScore(props.reviews, props.menu.dinner).toFixed(
-                  1
-                )}
+                score={AverageScore(props.reviews, props.menu.dinner) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.dinner).toFixed(1))}
                 meals={
                   filterKey == "none"
                     ? props.menu.dinner

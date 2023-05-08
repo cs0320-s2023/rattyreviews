@@ -22,8 +22,10 @@ function App() {
   const [menu, setMenu] = useState(new FullMenuResponse([], [], []));
   const [date, setDate] = useState(new Date());
   const [reviews, setReviews] = useState(Array<Review>);
+  //TODO: introduce loading screen when getting menu + review data
   useEffect(() => {
-    let dateString = date.toISOString().split("T")[0];
+    let dateComp = date.toLocaleDateString('en-GB', {timeZone: "EST"}).split("/");
+    let dateString = dateComp[2] + "-" +  dateComp[1] + "-" + dateComp[0];
     fetch("http://localhost:3232/menus?date=" + dateString)
       .then((res) => res.json())
       .then((data) => {
