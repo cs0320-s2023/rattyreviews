@@ -43,8 +43,7 @@
  
 
   .question3 {
-    margin-top: 100px;
-    height: 5.5vh;
+    height: fit-content;
     width: 35vw;
     border-radius: 5px;
     align-items: center;
@@ -52,7 +51,7 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.25vw;
+    font-size: 1em;
     color: black;
     
   }
@@ -75,13 +74,14 @@
     font-size: 2vw;
   }
 
-  .inputButton {
+  .commentBox {
     height: 10vh;
     width: 35vw;
-    border-radius: 15px;
-    font-size: .7vw;
+    border-radius: 5px;
     margin-left: auto;
     margin-right: auto; 
+    font-family: inherit;
+    font-size: 100%;
   }
 
 
@@ -108,4 +108,12 @@
     align-items: center;
     justify-content: center;
     align-self: center;
+  }
+
+
+  .loggedInArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
   }

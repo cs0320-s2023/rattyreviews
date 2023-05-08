@@ -11,8 +11,8 @@ interface reviewProps {
 
 function ReviewPage(props: reviewProps) {
   const [userID, setUserID] = useState("");
-  console.log(userID);
   const [clickedItem, setClickedItem] = useState<FoodItem>();
+  const [openItems, setOpenItems] = useState<Array<FoodItem>>();
   const [ratingVal, setRatingVal] = useState(1);
   const [inputBoxValue, setInputBoxValue] = useState("");
   const [isClicked1, setIsClicked1] = useState<boolean>(false);
@@ -61,6 +61,7 @@ function ReviewPage(props: reviewProps) {
   const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
 
   function filterItems(req: string) {
+    setOpenItems([]);
     switch (req) {
       case "breakfast": {
         setDisplayedItems(props.menu.breakfast);
@@ -80,19 +81,6 @@ function ReviewPage(props: reviewProps) {
     }
   }
 
-  // function getRatingScale() {
-  //   console.log("clicked!");
-  //   setReviewScale(
-  //     <div>
-  //       <button>1</button>
-  //       <button>2</button>
-  //       <button>3</button>
-  //       <button>4</button>
-  //       <button>5</button>
-  //     </div>
-  //   )
-  // }
-
   return (
     <div id="Review-Page">
       <NavBar />
@@ -100,7 +88,7 @@ function ReviewPage(props: reviewProps) {
       {reviewAvailable ? (
         //TODO: css all of this up
         <div>
-          <div className="reviewTitle">Review Page</div>
+          {/* <div className="reviewTitle">Review Page</div> */}
           <div>
             <button
               onClick={() => {
@@ -132,9 +120,9 @@ function ReviewPage(props: reviewProps) {
                 <RatingComp
                   item={item}
                   ratingVal={ratingVal}
-                  setClickedItem={setClickedItem}
+                  setOpenItems={setOpenItems}
                   setRatingVal={setRatingVal}
-                  clickedItem={clickedItem}
+                  openItems={openItems}
                 />
               );
             })}
@@ -143,29 +131,23 @@ function ReviewPage(props: reviewProps) {
           <div className="question3">
             Please provide any additional comments on the dish
             <div>
-              <input
-                className="inputButton"
+              <textarea
+                className="commentBox"
                 value={inputBoxValue}
                 onChange={(event) => setInputBoxValue(event.target.value)}
-              ></input>
+              ></textarea>
             </div>
           </div>
           <div>
             <button
               onClick={() => {
-                if (clickedItem != undefined) {
+                if (openItems != undefined) {
                   setInputBoxValue("");
                   let formData = {
                     UserID: userID,
                     Date: new Date().toISOString().split("T")[0],
-                    Ratings: [
-                      new FoodItem(
-                        clickedItem.title,
-                        clickedItem.description,
-                        ratingVal,
-                        clickedItem.foodRestrictions
-                      ),
-                    ],
+                    Ratings: openItems,
+                    comment: inputBoxValue
                   };
                   fetch("http://localhost:3232/addReview", {
                     method: "POST",
@@ -188,19 +170,20 @@ function ReviewPage(props: reviewProps) {
 interface rcProps {
   item: FoodItem;
   setRatingVal: Dispatch<SetStateAction<number>>;
-  setClickedItem: Dispatch<SetStateAction<FoodItem | undefined>>;
-  clickedItem: FoodItem | undefined;
+  setOpenItems: Dispatch<SetStateAction<FoodItem[] | undefined>>;
+  openItems: FoodItem[] | undefined;
   ratingVal: number;
 }
 
 function RatingComp(props: rcProps) {
   const [reviewScale, setReviewScale] = useState<JSX.Element>(<></>);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [itemRate, setItemRate] = useState<number>(0);
 
   useEffect(() => {
     setReviewScale(
       <div>
-        {props.clickedItem != undefined &&
-        props.clickedItem.title == props.item.title ? (
+        {props.openItems != undefined && isOpen ? (
           <div className="rater">
             <input
               type="range"
@@ -209,10 +192,13 @@ function RatingComp(props: rcProps) {
               min="0"
               max="5"
               step="0.5"
-              value={props.ratingVal}
+              value={props.item.rating}
               onChange={(ev) => {
-                props.setRatingVal(parseFloat(ev.target.value));
-                console.log(ev.target.value);
+                //props.setRatingVal(parseFloat(ev.target.value));
+                //console.log(ev.target.value);
+                props.item.rating = parseFloat(ev.target.value);
+                console.log(props.item.title + " now has a rating of " + props.item.rating);
+                setItemRate(props.item.rating);
               }}
               list="markers"
             ></input>
@@ -224,18 +210,31 @@ function RatingComp(props: rcProps) {
               <option value="4" label=":)"></option>
               <option value="5" label=":D"></option>
             </datalist>
-            <label htmlFor="Rating">Rating: {props.ratingVal}</label>
+            <label htmlFor="Rating">Rating: {props.item.rating} ⭐ </label>
           </div>
         ) : (
           <></>
         )}
       </div>
     );
-  }, [props.ratingVal, props.clickedItem]);
+  }, [itemRate, isOpen]);
 
   return (
     <div>
-      <button onClick={() => props.setClickedItem(props.item)}>
+      <button onClick={() => {
+        setIsOpen(!isOpen);
+        if(props.openItems != undefined) {
+          if(!isOpen) {
+            let fooItems : FoodItem[] = structuredClone(props.openItems);
+            fooItems.push(props.item);
+            props.setOpenItems(fooItems)
+          } else {
+            let fooItems : FoodItem[] = structuredClone(props.openItems);
+            fooItems.filter((item) => !item.equals(props.item))
+          }
+        }
+
+        }}>
         {props.item.title}
       </button>
       {reviewScale}
@@ -311,7 +310,7 @@ function LoginPage(props: loginProps) {
         onLoad={() => console.log("TODO: add onload function")}
       ></script>
       {profile ? (
-        <div>
+        <div className="loggedInArea">
           <p>Logged in as: {profile.email}</p>
           <button onClick={logOut}>Log out</button>
         </div>

@@ -15,6 +15,13 @@ class FoodItem {
     this.rating = rating;
     this.foodRestrictions = foodRestrictions;
   }
+
+  equals(it : FoodItem) {
+    return (it.description == this.description && 
+    it.foodRestrictions.map(elem => this.foodRestrictions.includes(elem)) &&
+    it.foodRestrictions.length == this.foodRestrictions.length &&
+    it.title == this.title);
+  }
 }
 
 class FullMenuResponse {
