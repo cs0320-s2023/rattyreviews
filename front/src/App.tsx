@@ -50,7 +50,7 @@ function App() {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [date]);
   return (
     <div className="App">
       <GoogleOAuthProvider clientId={googClientID}>
