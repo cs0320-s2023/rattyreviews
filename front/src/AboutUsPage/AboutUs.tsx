@@ -26,7 +26,7 @@ const team: TeamMember[] = [
     concentration: "Computer Science",
     hometown: "Los Angeles, NB",
     favratty: "Avocado Toast",
-    picture: "https://i.imgur.com/o8wR0um.jpg",
+    picture: "https://i.imgur.com/2ARly61.png",
   },
   {
     name: "Yonas Amha",
