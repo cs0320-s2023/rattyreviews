@@ -13,55 +13,16 @@ function ReviewPage(props: reviewProps) {
   const [userID, setUserID] = useState("");
   const [clickedItem, setClickedItem] = useState<FoodItem>();
   const [openItems, setOpenItems] = useState<Array<FoodItem>>();
+  const [justSwitchedMenu, setJustSwitchedMenu] = useState<boolean>(false);
   const [ratingVal, setRatingVal] = useState(1);
   const [inputBoxValue, setInputBoxValue] = useState("");
-  const [isClicked1, setIsClicked1] = useState<boolean>(false);
-  const [isClicked2, setIsClicked2] = useState<boolean>(false);
-  const [isClicked3, setIsClicked3] = useState<boolean>(false);
-  const [isClicked4, setIsClicked4] = useState<boolean>(false);
-  const [isClicked5, setIsClicked5] = useState<boolean>(false);
-
-  //TODO: simplify this
-
-  function checkStatus(id: number) {
-    if (id === 1) {
-      setIsClicked1(!isClicked1);
-      setIsClicked2(false);
-      setIsClicked3(false);
-      setIsClicked4(false);
-      setIsClicked5(false);
-    } else if (id === 2) {
-      setIsClicked1(false);
-      setIsClicked2(!isClicked2);
-      setIsClicked3(false);
-      setIsClicked4(false);
-      setIsClicked5(false);
-    } else if (id === 3) {
-      setIsClicked1(false);
-      setIsClicked2(false);
-      setIsClicked3(!isClicked3);
-      setIsClicked4(false);
-      setIsClicked5(false);
-    } else if (id === 4) {
-      setIsClicked1(false);
-      setIsClicked2(false);
-      setIsClicked3(false);
-      setIsClicked4(!isClicked4);
-      setIsClicked5(false);
-    } else if (id === 5) {
-      setIsClicked1(false);
-      setIsClicked2(false);
-      setIsClicked3(false);
-      setIsClicked4(false);
-      setIsClicked5(!isClicked5);
-    }
-  }
 
   const [reviewAvailable, setReviewAvailable] = useState<boolean>(false);
   const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
 
   function filterItems(req: string) {
     setOpenItems([]);
+    setJustSwitchedMenu(true);
     switch (req) {
       case "breakfast": {
         setDisplayedItems(props.menu.breakfast);
@@ -123,6 +84,8 @@ function ReviewPage(props: reviewProps) {
                   setOpenItems={setOpenItems}
                   setRatingVal={setRatingVal}
                   openItems={openItems}
+                  justSwitchedMenu={justSwitchedMenu}
+                  setJustSwitchedMenu={setJustSwitchedMenu}
                 />
               );
             })}
@@ -145,7 +108,7 @@ function ReviewPage(props: reviewProps) {
                   setInputBoxValue("");
                   let formData = {
                     UserID: userID,
-                    Date: new Date().toISOString().split("T")[0],
+                    Date: new Date().toString(),
                     Ratings: openItems,
                     comment: inputBoxValue
                   };
@@ -173,14 +136,23 @@ interface rcProps {
   setOpenItems: Dispatch<SetStateAction<FoodItem[] | undefined>>;
   openItems: FoodItem[] | undefined;
   ratingVal: number;
+  justSwitchedMenu: boolean;
+  setJustSwitchedMenu: Dispatch<boolean>;
 }
 
 function RatingComp(props: rcProps) {
   const [reviewScale, setReviewScale] = useState<JSX.Element>(<></>);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [itemRate, setItemRate] = useState<number>(0);
+  const [localRecentMenuSwitch, setLocalRecentMenuSwitch] = useState<boolean>(false);
+
 
   useEffect(() => {
+    if(props.justSwitchedMenu) {
+      console.log(props.item.title)
+      setIsOpen(false);
+      props.setJustSwitchedMenu(false);
+    }
     setReviewScale(
       <div>
         {props.openItems != undefined && isOpen ? (
@@ -199,6 +171,9 @@ function RatingComp(props: rcProps) {
                 props.item.rating = parseFloat(ev.target.value);
                 console.log(props.item.title + " now has a rating of " + props.item.rating);
                 setItemRate(props.item.rating);
+                console.log(props.openItems?.length);
+                console.log(props.openItems);
+
               }}
               list="markers"
             ></input>
@@ -213,24 +188,26 @@ function RatingComp(props: rcProps) {
             <label htmlFor="Rating">Rating: {props.item.rating} ⭐ </label>
           </div>
         ) : (
-          <></>
+          <>{}</>
         )}
       </div>
     );
-  }, [itemRate, isOpen]);
+  }, [itemRate, isOpen, props.justSwitchedMenu]);
 
   return (
     <div>
       <button onClick={() => {
         setIsOpen(!isOpen);
+        props.setJustSwitchedMenu(false);
         if(props.openItems != undefined) {
+          let fooItems : FoodItem[] = structuredClone(props.openItems);
           if(!isOpen) {
-            let fooItems : FoodItem[] = structuredClone(props.openItems);
             fooItems.push(props.item);
             props.setOpenItems(fooItems)
           } else {
-            let fooItems : FoodItem[] = structuredClone(props.openItems);
-            fooItems.filter((item) => !item.equals(props.item))
+            let goodItems : FoodItem[] = fooItems.filter((item) => {return !FoodItem.equals(props.item, item)})
+            props.setOpenItems(goodItems);
+            console.log("dropped item!")
           }
         }
 

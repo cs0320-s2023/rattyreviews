@@ -14,7 +14,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class reviewController {
 
-  private final String REVIEW_STORAGE_PATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\reviewData\\ReviewStore2.json";
+  private final String REVIEW_STORAGE_PATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\reviewData\\ReviewStore.json";
 
   //would love to convert this to some external db at some point, not necessary tho
   //need something like this for title items so we can cross ref when returning menus

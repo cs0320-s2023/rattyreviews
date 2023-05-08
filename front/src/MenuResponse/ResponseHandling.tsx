@@ -16,11 +16,11 @@ class FoodItem {
     this.foodRestrictions = foodRestrictions;
   }
 
-  equals(it : FoodItem) {
-    return (it.description == this.description && 
-    it.foodRestrictions.map(elem => this.foodRestrictions.includes(elem)) &&
-    it.foodRestrictions.length == this.foodRestrictions.length &&
-    it.title == this.title);
+  static equals(item1 : FoodItem, item2 : FoodItem) {
+    return (item1.description == item2.description && 
+    item1.foodRestrictions.map(elem => item2.foodRestrictions.includes(elem)) &&
+    item1.foodRestrictions.length == item2.foodRestrictions.length &&
+    item1.title == item2.title);
   }
 }
 

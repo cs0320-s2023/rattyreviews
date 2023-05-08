@@ -34,7 +34,7 @@ public class SchedScripts {
             System.out.println("stored reviews " + Calendar.getInstance().getTime());
         };
         ScheduledFuture<?> fileHandler =
-                scheduler.scheduleAtFixedRate(fileUpdater, 1, 5, MINUTES);
+                scheduler.scheduleAtFixedRate(fileUpdater, 1, 20, SECONDS);
         Runnable canceller = () -> fileHandler.cancel(false);
         //scheduler.schedule(canceller, 30, DAYS);
     }
