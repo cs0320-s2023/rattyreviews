@@ -60,10 +60,10 @@ function AboutUs() {
       <h1>Meet Our Team</h1>
       <div className="card-flex">
         {team.map((member) => (
-        <div className="card" key={member.name}>
+        <div className="card" data-testid="team-member-card" key={member.name} >
           <img className="headshot" src={member.picture} alt={member.name} />
           <h2>{member.name}</h2>
-          <p>Year: {member.year}</p>
+          <p >Year: {member.year}</p>
           <p>Concentration: {member.concentration}</p>
           <p>Hometown: {member.hometown}</p>
           <p>Favorite Ratty Meal: {member.favratty}</p>
