@@ -1,5 +1,4 @@
 import { NavBar } from "./../NavBar/NavBar";
-import { ReviewDropDown } from "./ReviewDropDown";
 import "../styles/ReviewPage.css";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
@@ -24,6 +23,7 @@ function ReviewPage(props: reviewProps) {
 
   const [reviewAvailable, setReviewAvailable] = useState<boolean>(false);
   const [displayeditems, setDisplayedItems] = useState<Array<FoodItem>>([]);
+  const [submittedReview, setSubmittedReview] = useState<boolean>(false);
 
   const [todaysMenu, setTodaysMenu] = useState<FullMenuResponse>(
     new FullMenuResponse([], [], [])
@@ -76,87 +76,103 @@ function ReviewPage(props: reviewProps) {
     }
   }
 
+  function loadSubmitReviewPage() {
+    return (
+      <div className="submitted-rev-page">
+        Review has been submitted at {new Date().toLocaleString()}.
+        <button onClick={() => {setReviewAvailable(true); setSubmittedReview(false)}}>Submit New Review 🐀</button>
+      </div>
+    )
+  }
+
   return (
     <div id="Review-Page">
       <NavBar />
-      <LoginPage
-        loginSwitch={setReviewAvailable}
-        setUserID={setUserID}
-        loginCallback={() => todaysMenuSetup()}
-      />
-      {reviewAvailable ? (
-        //TODO: css all of this up
-        <div className="review-page">
-          <div className="review-container">
-            {<div className="review-title">Review A Meal</div>}
-            <div className="dropdown-meals">
-              <select
-                onChange={(e) => {
-                  filterItems(e.target.value.toLowerCase());
-                }}
-              >
-                <option>Select a Meal</option>
-                <option>Breakfast</option>
-                <option>Lunch</option>
-                <option>Dinner</option>
-              </select>
-            </div>
-            <br />
+      <div className="dynamic-page">
+        <LoginPage
+          loginSwitch={setReviewAvailable}
+          setUserID={setUserID}
+          loginCallback={() => todaysMenuSetup()}
+        />
+        {reviewAvailable ? (
+          <div className="review-page">
+            <div className="review-container">
+              {<div className="review-title">Review A Meal</div>}
+              <div className="dropdown-meals">
+                <select
+                  onChange={(e) => {
+                    filterItems(e.target.value.toLowerCase());
+                  }}
+                >
+                  <option>Select a Meal</option>
+                  <option>Breakfast</option>
+                  <option>Lunch</option>
+                  <option>Dinner</option>
+                </select>
+              </div>
+              <br />
 
-            <div className="item-container">
-              {displayeditems.map((item) => {
-                return (
-                  <div className="individual-item">
-                    <RatingComp
-                      item={item}
-                      ratingVal={ratingVal}
-                      setOpenItems={setOpenItems}
-                      setRatingVal={setRatingVal}
-                      openItems={openItems}
-                      justSwitchedMenu={justSwitchedMenu}
-                      setJustSwitchedMenu={setJustSwitchedMenu}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+              <div className="item-container">
+                {displayeditems.map((item) => {
+                  return (
+                    <div className="individual-item">
+                      <RatingComp
+                        item={item}
+                        ratingVal={ratingVal}
+                        setOpenItems={setOpenItems}
+                        setRatingVal={setRatingVal}
+                        openItems={openItems}
+                        justSwitchedMenu={justSwitchedMenu}
+                        setJustSwitchedMenu={setJustSwitchedMenu}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
 
-            <div className="question3">
+              <div className="question3">
+                <div>
+                  <textarea
+                    placeholder="Describe your experience with this meal"
+                    className="commentBox"
+                    value={inputBoxValue}
+                    onChange={(event) => setInputBoxValue(event.target.value)}
+                  ></textarea>
+                </div>
+              </div>
               <div>
-                <textarea
-                  placeholder="Describe your experience with this meal"
-                  className="commentBox"
-                  value={inputBoxValue}
-                  onChange={(event) => setInputBoxValue(event.target.value)}
-                ></textarea>
+                <button
+                  onClick={() => {
+                    if (openItems != undefined && openItems.length > 0) {
+                      setInputBoxValue("");
+                      let formData = {
+                        UserID: userID,
+                        Date: new Date().toString(),
+                        Ratings: openItems,
+                        comment: inputBoxValue,
+                      };
+                      fetch("http://localhost:3232/addReview", {
+                        method: "POST",
+                        body: JSON.stringify(formData), // body data type must match "Content-Type" header
+                      }).then(() => console.log("Success"));
+                      setSubmittedReview(true)
+                      setReviewAvailable(false);
+                    }
+                  }}
+                >
+                  submit
+                </button>
               </div>
             </div>
-            <div>
-              <button
-                onClick={() => {
-                  if (openItems != undefined) {
-                    setInputBoxValue("");
-                    let formData = {
-                      UserID: userID,
-                      Date: new Date().toString(),
-                      Ratings: openItems,
-                      comment: inputBoxValue,
-                    };
-                    fetch("http://localhost:3232/addReview", {
-                      method: "POST",
-                      body: JSON.stringify(formData), // body data type must match "Content-Type" header
-                    }).then(() => console.log("Success"));
-                  }
-                }}
-              >
-                submit
-              </button>
-            </div>
           </div>
+        ) : (
+          <div></div>
+        )}
+        <div>
+          {submittedReview ? (loadSubmitReviewPage()) : (<></>)}
+          
         </div>
-      ) : (
-        <div>nothing!</div>
-      )}
+      </div>
     </div>
   );
 }
