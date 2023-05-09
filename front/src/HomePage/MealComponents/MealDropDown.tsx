@@ -31,12 +31,12 @@ function MealDropDown(props: MealDropDownProps) {
     <div className="all-meals-container">
       <div className="meal-container">
         <div className="meal-title meal-text">
-          <p>{mealString}</p>
+          <div>{mealString}</div>
         </div>
         <div className="button-score-container">
           <div className="button-score">
             <div className="meal-score meal-text">
-              <p>{props.score}</p>
+              <div>{props.score}</div>
             </div>
             <div className="dropdown-button-container">
               <button

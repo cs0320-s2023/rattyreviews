@@ -24,8 +24,8 @@ import edu.brown.cs.student.main.Utils.Food;
 
 public class ProvideMenu implements Route {
 
-    public final int NUM_OF_HOURS_FOR_EVICT = 0;
-    public final int NUM_OF_MINS_FOR_EVICT = 10;
+    public final int NUM_OF_HOURS_FOR_EVICT = 1;
+    public final int NUM_OF_MINS_FOR_EVICT = 0;
 
     public final String REL_FILE_PATH = "src\\main\\java\\edu\\brown\\cs\\student\\main\\menuData\\";
     /**

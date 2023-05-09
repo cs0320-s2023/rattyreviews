@@ -7,7 +7,7 @@ import {
 import "./../../styles/MealBox.css";
 import Meal from "./Meal";
 import MealDropDown from "./MealDropDown";
-import { MdArrowDropDown } from "react-icons/Md";
+import { MdArrowDropDown, MdArrowLeft, MdArrowRight } from "react-icons/Md";
 import { AverageScore } from "./ScoreCalculators/AverageScore";
 
 interface MealBoxProps {
@@ -30,7 +30,7 @@ function MealBox(props: MealBoxProps) {
   return (
     <div className="meal-control-container">
       <div className="left-arrow-container">
-        <MdArrowDropDown
+        <MdArrowLeft
           className="left-arrow"
           onClick={() => {
             //TODO: CLEAN THIS UP
@@ -49,12 +49,12 @@ function MealBox(props: MealBoxProps) {
         <div id="meal-box">
           <div className="title-line-container">
             <div className="date-text-container">
-              <p className="date-text">
+              <div className="date-text">
                 {props.parser(props.date.toISOString().split("T")[0])}
-              </p>
+              </div>
             </div>
             <div className="info-icon">
-              <p>ℹ️</p>
+              <div>ℹ️</div>
             </div>
           </div>
           <div className="filter-container">
@@ -114,7 +114,7 @@ function MealBox(props: MealBoxProps) {
         </div>
       </div>
       <div className="right-arrow-container">
-        <MdArrowDropDown
+        <MdArrowRight
           className="right-arrow" //TODO: CLEAN THIS UP
           onClick={() => {
             let upperDateBound = new Date(
