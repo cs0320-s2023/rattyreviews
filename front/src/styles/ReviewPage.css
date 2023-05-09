@@ -143,3 +143,9 @@ input[type="range"] {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.25rem;
 }
+
+.all-meals-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
