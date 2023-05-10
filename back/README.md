@@ -1,4 +1,4 @@
-# This is old, but the info on running is still relevant!
+# This is old, but some of the info on running is still relevant!
 
 
 # Sprint 3: Server

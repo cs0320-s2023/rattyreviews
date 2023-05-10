@@ -8,14 +8,14 @@
 ## Design Choices:
 - Frontend:
 
-
 The file structure desctibes frontend files for the ratty reviews website. The structure includes various node modules such as xmlchars, etc., as well as package-lock.json. The public folder contains static files such as images and the index.html file. The src folder has subfolders for AboutUsPage, HomePage, login, MenuResponse, NavBar, private, and ReviewMealPage, each containing relevant files such as components, parsers, and pages. The styles folder contains css files for various components. The tests folder includes test files for the AboutUs and mockFetchTests. Finally, the main.tsx file is the entry point for the application and the vite.config.ts file is the configuration file for Vite, the frontend build tool.
 
 - Backend:
 
 ## Errors/Bugs:
 
-N/A
+-Review page still allows a user to spam the form with a review.
+-Home page has no loading indicator for reviews or menus, causing confusing behavior when loading from the server.
 
 ## Tests:
 Frontend:

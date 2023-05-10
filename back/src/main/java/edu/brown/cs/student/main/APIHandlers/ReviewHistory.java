@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.APIHandlers;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.dataStructures.reviewController;
 import spark.Request;
 import spark.Response;
 import spark.Route;

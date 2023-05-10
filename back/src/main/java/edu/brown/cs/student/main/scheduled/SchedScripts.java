@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.scheduled;
 
 import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
-import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.dataStructures.reviewController;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

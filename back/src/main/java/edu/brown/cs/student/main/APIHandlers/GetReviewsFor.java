@@ -1,8 +1,8 @@
 package edu.brown.cs.student.main.APIHandlers;
 
-import edu.brown.cs.student.main.Utils.Food;
-import edu.brown.cs.student.main.Utils.Review;
-import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.dataStructures.Food;
+import edu.brown.cs.student.main.dataStructures.Review;
+import edu.brown.cs.student.main.dataStructures.reviewController;
 import edu.brown.cs.student.main.server.MapSerializer;
 import okio.Buffer;
 import spark.Request;

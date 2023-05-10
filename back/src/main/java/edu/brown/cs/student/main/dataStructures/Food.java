@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.Utils;
+package edu.brown.cs.student.main.dataStructures;
 
 import java.util.List;
 import java.util.Map;

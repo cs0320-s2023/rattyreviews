@@ -20,7 +20,7 @@ import java.util.*;
 
 import static edu.brown.cs.student.main.webscraping.ScrapeDiningMenu.getAllMenus;
 
-import edu.brown.cs.student.main.Utils.Food;
+import edu.brown.cs.student.main.dataStructures.Food;
 
 public class ProvideMenu implements Route {
 

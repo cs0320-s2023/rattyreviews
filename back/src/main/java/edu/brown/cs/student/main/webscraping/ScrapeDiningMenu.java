@@ -2,13 +2,10 @@ package edu.brown.cs.student.main.webscraping;
 
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
-import edu.brown.cs.student.main.Utils.Food;
+import edu.brown.cs.student.main.dataStructures.Food;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.*;
 
 //TODO: use data from https://mymeal.brown.edu/NetNutrition/ to determine allergens

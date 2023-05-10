@@ -1,13 +1,12 @@
 package edu.brown.cs.student.main.server;
 
-import static edu.brown.cs.student.main.webscraping.ScrapeDiningMenu.getAllMenus;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.APIHandlers.AddReview;
 import edu.brown.cs.student.main.APIHandlers.GetReviewsFor;
 import edu.brown.cs.student.main.APIHandlers.ProvideMenu;
 import edu.brown.cs.student.main.APIHandlers.ReviewHistory;
-import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.dataStructures.reviewController;
 import edu.brown.cs.student.main.scheduled.SchedScripts;
 import spark.Spark;
 

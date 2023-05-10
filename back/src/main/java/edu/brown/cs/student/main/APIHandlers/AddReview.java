@@ -1,22 +1,17 @@
 package edu.brown.cs.student.main.APIHandlers;
 
-import com.squareup.moshi.JsonDataException;
-import com.squareup.moshi.JsonEncodingException;
-import edu.brown.cs.student.main.Utils.Food;
-import edu.brown.cs.student.main.Utils.Review;
-import edu.brown.cs.student.main.Utils.inputtedReview;
-import edu.brown.cs.student.main.Utils.reviewController;
+import edu.brown.cs.student.main.dataStructures.Food;
+import edu.brown.cs.student.main.dataStructures.Review;
+import edu.brown.cs.student.main.dataStructures.inputtedReview;
+import edu.brown.cs.student.main.dataStructures.reviewController;
 import edu.brown.cs.student.main.server.MapSerializer;
 import okio.Buffer;
-import okio.BufferedSource;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddReview implements Route {
 
