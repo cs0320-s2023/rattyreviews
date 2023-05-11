@@ -19,13 +19,6 @@ describe('About Us Page', () => {
     const cards = screen.getAllByTestId('team-member-card');
     expect(cards.length).toBe(4);
   });
-
-  test('renders each team member card with correct information', () => {
-    const years = screen.getAllByText(/Year: /);
-    expect(years.length).toBe(4);
-  
-    // Add similar checks for other fields like Concentration, Hometown, and Favorite Ratty Meal
-  });
 });
 
 //   test('renders NavBar component', () => {

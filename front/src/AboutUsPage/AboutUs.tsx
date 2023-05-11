@@ -20,7 +20,7 @@ const team: TeamMember[] = [
     concentration: "Computational Biology",
     hometown: "Cincinnati, OH",
     favratty: "Chicken Tinga",
-    picture: "https://i.imgur.com/o8wR0um.jpg",
+    picture: "https://i.imgur.com/prDrI6W.png",
   },
   {
     name: "Akshay Mehta",
