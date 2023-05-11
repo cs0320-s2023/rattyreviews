@@ -31,8 +31,8 @@ public class ProvideMenu implements Route {
     /**
      * provides the full menu for the sharpe refectory for the given date. will return the current day if the date isn't specified
      * Might fail for future dates, but seems to work for past dates arbitrarily
-     * @param request
-     * @param response
+     * @param request the get request sent to the server
+     * @param response the response retrieved from the server
      * @return
      * @throws Exception
      */
@@ -47,6 +47,12 @@ public class ProvideMenu implements Route {
     }
 
     //public since this getting the menu is helpful for other systems
+
+    /**
+     *
+     * @param asked the localDate timestamp that is retrieved
+     * @return the serialized string response
+     */
     public String GetMenuForDate(LocalDate asked) {
         boolean deleteFile = false;
         Path targetPath = Paths.get(REL_FILE_PATH + asked.toString() + ".json");
