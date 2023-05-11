@@ -32,6 +32,7 @@ function MealBox(props: MealBoxProps) {
       <div className="left-arrow-container">
         <MdArrowLeft
           className="left-arrow"
+          aria-label="Backwards in date by one Button"
           onClick={() => {
             //TODO: CLEAN THIS UP
             let lowerDateBound = new Date(
@@ -54,7 +55,14 @@ function MealBox(props: MealBoxProps) {
               </div>
             </div>
             <div className="info-icon">
-              <div>ℹ️</div>
+              <button
+                style={{ all: "unset" }}
+                onClick={() =>
+                  (location.href = "../../../public/Algorithms_Used.pdf")
+                }
+              >
+                ℹ️
+              </button>
             </div>
           </div>
           <div className="filter-container">
@@ -71,7 +79,13 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Breakfast}
-                score={AverageScore(props.reviews, props.menu.breakfast) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.breakfast).toFixed(1))}
+                score={
+                  AverageScore(props.reviews, props.menu.breakfast) < 0
+                    ? "N/A"
+                    : AverageScore(props.reviews, props.menu.breakfast).toFixed(
+                        1
+                      )
+                }
                 meals={
                   filterKey == "none"
                     ? props.menu.breakfast
@@ -85,7 +99,11 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Lunch}
-                score={AverageScore(props.reviews, props.menu.lunch) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.lunch).toFixed(1))}
+                score={
+                  AverageScore(props.reviews, props.menu.lunch) < 0
+                    ? "N/A"
+                    : AverageScore(props.reviews, props.menu.lunch).toFixed(1)
+                }
                 meals={
                   filterKey == "none"
                     ? props.menu.lunch
@@ -99,7 +117,11 @@ function MealBox(props: MealBoxProps) {
             <div className="meals-container">
               <MealDropDown
                 meal={Meal.Dinner}
-                score={AverageScore(props.reviews, props.menu.dinner) < 0 ? ("N/A") : (AverageScore(props.reviews, props.menu.dinner).toFixed(1))}
+                score={
+                  AverageScore(props.reviews, props.menu.dinner) < 0
+                    ? "N/A"
+                    : AverageScore(props.reviews, props.menu.dinner).toFixed(1)
+                }
                 meals={
                   filterKey == "none"
                     ? props.menu.dinner
@@ -115,6 +137,7 @@ function MealBox(props: MealBoxProps) {
       </div>
       <div className="right-arrow-container">
         <MdArrowRight
+          aria-label="Forwards in date by one Button"
           className="right-arrow" //TODO: CLEAN THIS UP
           onClick={() => {
             let upperDateBound = new Date(
