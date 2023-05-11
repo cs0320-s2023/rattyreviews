@@ -19,6 +19,13 @@ public class AddReview implements Route {
 
     public AddReview (reviewController controller) {this.controller = controller;}
 
+    /**
+     *
+     * @param request the request sent to the server
+     * @param response the response that server sends back
+     * @return the serialized object
+     * @throws Exception if the userID is not found
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Buffer neededBuff = new Buffer();

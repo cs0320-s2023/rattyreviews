@@ -15,6 +15,12 @@ import java.util.*;
 
 public class ScrapeDiningMenu {
 
+  /**
+   *
+   * @param date the localDate timestamp retrieved
+   * @return the menus map
+   * @throws IOException when the webClient cannot be found
+   */
   public static Map<String, Food.Menu> getAllMenus(LocalDate date) throws IOException {
     WebClient webClient = new WebClient(BrowserVersion.CHROME);
     // v Quiets all the exceptions that we don't care about, especially related to ads.
@@ -74,6 +80,11 @@ public class ScrapeDiningMenu {
   }
 
 
+  /**
+   *
+   * @param htmlMenu the list of HTMLElements that will be processed into the food menus
+   * @return the food menu that has been converted form htmlMenu
+   */
   private static Food.Menu buildMenu(List<HtmlElement> htmlMenu) {
     Map<String, List<Food.FoodItem>> accMenu = new HashMap<>();
     String lastStation = "";
@@ -101,6 +112,11 @@ public class ScrapeDiningMenu {
     return new Food.Menu(accMenu);
   }
 
+  /**
+   *
+   * @param item the foodItem as an HTMLElement that will be converted to FoodItem
+   * @return the extracted foodItem
+   */
   private static Food.FoodItem extractHtmlFood(HtmlElement item) {
     HtmlElement htmlTitle = item.getFirstByXPath(".//button[@class='h4 site-panel__daypart-item-title']");
     String foodTitle = htmlTitle.getVisibleText();
@@ -123,6 +139,11 @@ public class ScrapeDiningMenu {
     return new Food.FoodItem(foodTitle, foodDesc, -1, dietaryRestrictions);
   }
 
+  /**
+   *
+   * @param elementTitle the elementTitle that
+   * @return the string indicating the dietary characteristic of the elementTitle
+   */
   private static Optional<String> dietaryDisambiguator(String elementTitle) {
     //noting here, in the code, that vegan/vegetarian != in accordance with dietary laws regarding meat / alcohol
     List<String> keys = new ArrayList<>(List.of("vegan", "vegetarian", "without gluten", "halal", "farm to fork"));
