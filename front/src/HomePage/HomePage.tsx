@@ -15,13 +15,22 @@ function HomePage(props: HomePageProps) {
   return (
     <div id="Home">
       <NavBar />
-      <MealBox
-        setDate={props.setDate}
-        date={props.date}
-        parser={DateParser}
-        menu={props.menu}
-        reviews={props.reviews}
-      />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "77vh",
+        }}
+      >
+        <MealBox
+          setDate={props.setDate}
+          date={props.date}
+          parser={DateParser}
+          menu={props.menu}
+          reviews={props.reviews}
+        />
+      </div>
     </div>
   );
 }

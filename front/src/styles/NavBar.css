@@ -6,7 +6,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 2%;
+  margin-top: 3vh;
 }
 
 .title-container {
@@ -14,15 +14,18 @@
 }
 
 .title {
-  margin: 0px;
   font-size: 3vw;
 }
 
 .nav-button {
-  height: 5.5vh;
-  width: 13vw;
+  padding: 1vh;
+  height: 3.5vh;
+  width: 12vw;
   background-color: var(--nav-color, #6f3b2f);
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .review-button {
@@ -31,7 +34,6 @@
 
 .button-text {
   font-size: 2vw;
-  margin: 0.4vh;
 }
 
 .about-button {
