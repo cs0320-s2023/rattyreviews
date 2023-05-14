@@ -62,4 +62,5 @@ describe("Home page", () => {
     const filter = screen.getAllByText("none");
     expect(filter.length).toBe(1);
   });
+
 });

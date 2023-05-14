@@ -97,7 +97,7 @@ function ReviewPage(props: reviewProps) {
         {reviewAvailable ? (
           <div className="review-page">
             <div className="review-container">
-              {<div className="review-title">Review A Meal</div>}
+              {<div className="review-title" aria-label="Review a Meal">Review A Meal</div>}
               <div className="dropdown-meals">
                 <select
                   onChange={(e) => {

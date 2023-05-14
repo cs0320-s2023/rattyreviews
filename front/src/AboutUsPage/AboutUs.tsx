@@ -55,7 +55,7 @@ const team: TeamMember[] = [
 // The "key" attribute is set to the member's name to improve rendering performance.
 function AboutUs() {
   return (
-    <div id="About-Us">
+    <div id="About-Us" aria-label="About Us">
       <NavBar />
       <h1>Meet Our Team</h1>
       <div className="card-flex">
